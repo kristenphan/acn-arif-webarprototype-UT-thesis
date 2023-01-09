@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-nodejs16.x
+
+  Sample SAM Template for lambda-nodejs16.x
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      FunctionName: webar-lambda-test3
+      Tags:
+        project: webar
+      Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-sensordataselect-role-zs2avpze
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors: 
+            AllowMethods: 
+              - POST
+            AllowHeaders:
+              - content-type
+            AllowOrigins: 
+              - https://d287cl5btunnv2.cloudfront.net
+Outputs:
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
