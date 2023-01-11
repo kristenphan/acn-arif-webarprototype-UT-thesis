@@ -9,6 +9,9 @@ Globals:
     MemorySize: 128
 
 Resources:
+  ##########################################################################
+  #   Lambda Function                                                      #
+  ##########################################################################
   SensorDataSelectFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -72,6 +75,27 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
+  ##########################################################################
+  #   DynamoDB                                                            #
+  ##########################################################################
+  SensorDataDDB:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: sensorId
+          AttributeType: N
+        - AttributeName: timeEpoch
+          AttributeType: N
+      KeySchema:
+        - AttributeName: sensorId
+          KeyType: HASH
+        - AttributeName: timeEpoch
+          KeyType: RANGE
+      BillingMode: PROVISIONED
+      TableName: webar-ddb-sensordata
+      Tags: 
+        - Key: project
+          Value: webar
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
@@ -82,3 +106,6 @@ Outputs:
   WaterMeInsertFunction:
     Description: "Write watering record to ddb"
     Value: !GetAtt WaterMeInsertFunction.Arn
+  SensorDataDDB:
+    Description: "Dynamodb table storing sensor data"
+    Value: !GetAtt SensorDataDDB.Arn
