@@ -36,4 +36,14 @@ steps:
     cd ./webar-lambda-test3
     sam build
     ls
-  displayName: 'Run sam build'
+- task: CloudFormationCreateOrUpdateStack@1
+  inputs:
+    awsCredentials: 'aws-sc'
+    regionName: 'eu-central-1'
+    stackName: '"webar-stack-azure"'
+    templateSource: 'file'
+    templateFile: './template.yaml'
+    templateParametersSource: 'inline'
+    capabilityNamedIAM: false
+  displayName: 'Deploy sam using task CloudFormationCreateorUpdateStack'
+
