@@ -34,7 +34,4 @@ steps:
 
 - script: |
     ls
-    cd ..
-    sam build
-    ls
-  displayName: 'Run sam build'
+  displayName: 'Run ls'
