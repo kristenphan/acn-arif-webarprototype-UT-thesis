@@ -10,6 +10,31 @@ Globals:
 
 Resources:
   ##########################################################################
+  #   DynamoDB                                                            #
+  ##########################################################################
+  SensorDataDDB:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: sensorId
+          AttributeType: N
+        - AttributeName: timeEpoch
+          AttributeType: N
+      KeySchema:
+        - AttributeName: sensorId
+          KeyType: HASH
+        - AttributeName: timeEpoch
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: 0
+        WriteCapacityUnits: 0
+      TableName: webar-ddb-sensordata2
+      Tags: 
+        - Key: project
+          Value: webar
+          
+  ##########################################################################
   #   Lambda Function                                                      #
   ##########################################################################
   SensorDataSelectFunction:
@@ -23,6 +48,9 @@ Resources:
       FunctionName: webar-lambda-sensordataselect2
       Tags:
         project: webar
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref SensorDataDDB
       Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-sensordataselect-role-zs2avpze
       FunctionUrlConfig:
         AuthType: NONE
@@ -75,30 +103,6 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
-  ##########################################################################
-  #   DynamoDB                                                            #
-  ##########################################################################
-  SensorDataDDB:
-    Type: AWS::DynamoDB::Table
-    Properties: 
-      AttributeDefinitions: 
-        - AttributeName: sensorId
-          AttributeType: N
-        - AttributeName: timeEpoch
-          AttributeType: N
-      KeySchema:
-        - AttributeName: sensorId
-          KeyType: HASH
-        - AttributeName: timeEpoch
-          KeyType: RANGE
-      BillingMode: PROVISIONED
-      ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      TableName: webar-ddb-sensordata2
-      Tags: 
-        - Key: project
-          Value: webar
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
