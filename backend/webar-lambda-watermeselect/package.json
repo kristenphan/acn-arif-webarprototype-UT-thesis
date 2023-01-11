@@ -1,5 +1,6 @@
 {
   "name": "webar-lambda-watermeselect",
+  "version": "1.0.0",
   "description": "Query watering history from ddb",
   "main": "app.js",
   "author": "kristen.phan@accenture.com",

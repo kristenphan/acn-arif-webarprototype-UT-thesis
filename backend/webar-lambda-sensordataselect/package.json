@@ -1,5 +1,6 @@
 {
   "name": "webar-lambda-sensordataselect",
+  "version": "1.0.0",
   "description": "Query sensor data from ddb",
   "main": "app.js",
   "author": "kristen.phan@accenture.com",
