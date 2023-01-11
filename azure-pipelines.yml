@@ -48,4 +48,6 @@ steps:
     regionName: 'eu-central-1'
     scriptType: 'inline'
     inlineScript: 'sam deploy'
+    disableAutoCwd: true
+    workingDirectory: './webar/lambda-test3'
   displayName: "Run sam deploy using AWS Shell Script plug-in"
