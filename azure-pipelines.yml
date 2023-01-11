@@ -28,6 +28,6 @@ steps:
   displayName: "Install npm modules"
 
 - script: |
-    cd .\webar-lambda-test3\hello-world\
+    cd ./webar-lambda-test3/hello-world
     npm list --depth=0
-  displayName: "Confirm node modules installed"
+  displayName: 'Confirm npm modules installed'
