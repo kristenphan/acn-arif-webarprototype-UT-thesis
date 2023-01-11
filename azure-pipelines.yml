@@ -21,14 +21,6 @@ steps:
 - script: sam --version
   displayName: "Confirm AWS SAM CLI installed"
 
-- task: AWSShellScript@1
-  inputs:
-    awsCredentials: 'aws-sc'
-    regionName: 'eu-central-1'
-    scriptType: 'inline'
-    inlineScript: 'sam --version'
-  displayName: "Run sam --version using AWS Shell Script plug-in"
-
 - task: Npm@1
   inputs:
     command: 'install'
@@ -49,14 +41,11 @@ steps:
 - script: |
     ls
   displayName: "Doublecheck current directory"
-- task: CloudFormationCreateOrUpdateStack@1
+  
+- task: AWSShellScript@1
   inputs:
     awsCredentials: 'aws-sc'
     regionName: 'eu-central-1'
-    stackName: '"webar-stack-azure"'
-    templateSource: 'file'
-    templateFile: './webar-lambda-test3/template.yaml'
-    templateParametersSource: 'inline'
-    capabilityNamedIAM: false
-  displayName: "Deploy sam build artifacts"
-
+    scriptType: 'inline'
+    inlineScript: 'sam deploy'
+  displayName: "Run sam deploy using AWS Shell Script plug-in"
