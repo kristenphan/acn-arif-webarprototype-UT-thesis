@@ -1,0 +1,12 @@
+{
+  "name": "webar-lambda-watermeinsert",
+  "version": "1.0.0",
+  "description": "Write watering record to ddb",
+  "main": "app.js",
+  "author": "kristen.phan@accenture.com",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.199.0",
+    "@aws-sdk/lib-dynamodb": "^3.199.0"
+  }
+}
