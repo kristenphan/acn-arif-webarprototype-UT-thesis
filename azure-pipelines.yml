@@ -31,3 +31,9 @@ steps:
     cd ./webar-lambda-test3/hello-world
     npm list --depth=0
   displayName: 'Confirm npm modules installed'
+
+- script: |
+    cd ..
+    sam build
+    ls
+  displayName: 'Run sam build'
