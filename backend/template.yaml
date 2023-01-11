@@ -92,6 +92,9 @@ Resources:
         - AttributeName: timeEpoch
           KeyType: RANGE
       BillingMode: PROVISIONED
+      ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
       TableName: webar-ddb-sensordata2
       Tags: 
         - Key: project
