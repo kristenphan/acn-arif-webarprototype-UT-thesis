@@ -20,3 +20,10 @@ steps:
 
 - script: sam --version
   displayName: "Confirm AWS SAM CLI installed"
+
+- 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: './webar-lambda-test3/hello-world'
+  displayName: "Install npm modules"
