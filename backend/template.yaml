@@ -17,7 +17,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-test3
+      FunctionName: webar-lambda-sensordataselect2
       Tags:
         project: webar
       Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-sensordataselect-role-zs2avpze
