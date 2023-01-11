@@ -27,10 +27,11 @@ steps:
     workingDir: './backend/webar-lambda-sensordataselect'
   displayName: "Install npm modules"
 
-- script: |
-    cd ./backend/webar-lambda-sensordataselect
-    npm list --depth=0
-  displayName: 'Confirm npm modules installed'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: './backend/webar-lambda-watermeselect'
+  displayName: "Install npm modules"
 
 - script: |
     cd ./backend
@@ -42,7 +43,7 @@ steps:
     awsCredentials: 'aws-sc'
     regionName: 'eu-central-1'
     scriptType: 'inline'
-    inlineScript: 'ls; sam deploy'
+    inlineScript: 'sam deploy'
     disableAutoCwd: true
     workingDirectory: './backend'
   displayName: "Deploy sam build artifacts to aws"
