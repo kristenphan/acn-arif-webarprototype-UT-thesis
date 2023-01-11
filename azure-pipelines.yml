@@ -21,7 +21,6 @@ steps:
 - script: sam --version
   displayName: "Confirm AWS SAM CLI installed"
 
-- 
 - task: Npm@1
   inputs:
     command: 'install'
