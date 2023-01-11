@@ -33,5 +33,6 @@ steps:
   displayName: 'Confirm npm modules installed'
 
 - script: |
-    ls
-  displayName: 'Run ls'
+    cd ./webar-lambda-test3
+    sam build
+  displayName: 'Run sam build'
