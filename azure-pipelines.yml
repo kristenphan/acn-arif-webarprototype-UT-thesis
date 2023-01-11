@@ -33,6 +33,7 @@ steps:
   displayName: 'Confirm npm modules installed'
 
 - script: |
+    ls
     cd ..
     sam build
     ls
