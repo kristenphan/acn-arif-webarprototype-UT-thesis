@@ -92,7 +92,7 @@ Resources:
         - AttributeName: timeEpoch
           KeyType: RANGE
       BillingMode: PROVISIONED
-      TableName: webar-ddb-sensordata
+      TableName: webar-ddb-sensordata2
       Tags: 
         - Key: project
           Value: webar
