@@ -15,6 +15,13 @@ steps:
     versionSpec: "16.x"
   displayName: "Install Node.js"
 
+- task: AWSCLI@1
+  inputs:
+    awsCredentials: 'aws-sc'
+    regionName: 'eu-central-1'
+    awsCommand: 'sam --version'
+  displayName: "Run sam --version using AWS CLI plug-in"
+
 - script: pip install aws-sam-cli
   displayName: "Install AWS SAM CLI"
 
