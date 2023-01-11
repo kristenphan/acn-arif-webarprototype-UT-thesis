@@ -17,3 +17,6 @@ steps:
 
 - script: pip install aws-sam-cli
   displayName: "Install AWS SAM CLI"
+
+- script: sam --version
+  displayName: "Confirm AWS SAM CLI installed"
