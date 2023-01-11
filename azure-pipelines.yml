@@ -37,6 +37,10 @@ steps:
     sam build
     ls
   displayName: "Run sam build"
+
+- script: |
+    ls
+  displayName: "Doublecheck current directory"
 - task: CloudFormationCreateOrUpdateStack@1
   inputs:
     awsCredentials: 'aws-sc'
@@ -46,5 +50,5 @@ steps:
     templateFile: 'template.yaml'
     templateParametersSource: 'inline'
     capabilityNamedIAM: false
-  displayName: 'Deploy sam using task CloudFormationCreateorUpdateStack'
+  displayName: "Deploy sam build artifacts"
 
