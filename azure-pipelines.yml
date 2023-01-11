@@ -47,7 +47,7 @@ steps:
     regionName: 'eu-central-1'
     stackName: '"webar-stack-azure"'
     templateSource: 'file'
-    templateFile: 'template.yaml'
+    templateFile: './webar-lambda-test3/template.yaml'
     templateParametersSource: 'inline'
     capabilityNamedIAM: false
   displayName: "Deploy sam build artifacts"
