@@ -24,16 +24,16 @@ steps:
 - task: Npm@1
   inputs:
     command: 'install'
-    workingDir: './webar-lambda-test3/hello-world'
+    workingDir: './backend/webar-lambda-sensordataselect'
   displayName: "Install npm modules"
 
 - script: |
-    cd ./webar-lambda-test3/hello-world
+    cd ./backend/webar-lambda-sensordataselect
     npm list --depth=0
   displayName: 'Confirm npm modules installed'
 
 - script: |
-    cd ./webar-lambda-test3
+    cd ./backend
     sam build
   displayName: "Run sam build"
 
@@ -44,5 +44,5 @@ steps:
     scriptType: 'inline'
     inlineScript: 'ls; sam deploy'
     disableAutoCwd: true
-    workingDirectory: './webar-lambda-test3'
-  displayName: "Run sam deploy using AWS Shell Script plug-in"
+    workingDirectory: './backend'
+  displayName: "Deploy sam build artifacts to aws"
