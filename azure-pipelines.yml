@@ -25,13 +25,19 @@ steps:
   inputs:
     command: 'install'
     workingDir: './backend/webar-lambda-sensordataselect'
-  displayName: "Install npm modules"
+  displayName: "Install npm modules for webar-lambda-sensordataselect"
 
 - task: Npm@1
   inputs:
     command: 'install'
     workingDir: './backend/webar-lambda-watermeselect'
-  displayName: "Install npm modules"
+  displayName: "Install npm modules for webar-lambda-watermeselect"
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: './backend/webar-lambda-watermeinsert'
+  displayName: "Install npm modules for webar-lambda-watermeinsert"
 
 - script: |
     cd ./backend
