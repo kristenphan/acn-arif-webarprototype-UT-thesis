@@ -1,6 +1,9 @@
 {
   "name": "webar-lambda-sensordataselect",
+  "description": "Query sensor data from ddb",
   "main": "app.js",
+  "author": "kristen.phan@accenture.com",
+  "type": "module",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.204.0"
   },
@@ -10,6 +13,5 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^9.1.4"
-  },
-  "type": "module"
+  }
 }
