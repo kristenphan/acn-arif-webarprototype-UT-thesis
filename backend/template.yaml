@@ -51,10 +51,34 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
+  WaterMeInsertFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: webar-lambda-watermeinsert/
+      Handler: app.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      FunctionName: webar-lambda-watermeinsert2
+      Tags:
+        project: webar
+      Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-watermeinsert-role-01ns09dc
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors: 
+            AllowMethods: 
+              - POST
+            AllowHeaders:
+              - content-type
+            AllowOrigins: 
+              - https://d287cl5btunnv2.cloudfront.net
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
     Value: !GetAtt SensorDataSelectFunction.Arn
   WaterMeSelectFunction:
-    Description: "Query wateirng history from ddb"
+    Description: "Query watering history from ddb"
     Value: !GetAtt WaterMeSelectFunction.Arn
+  WaterMeInsertFunction:
+    Description: "Write watering record to ddb"
+    Value: !GetAtt WaterMeInsertFunction.Arn
