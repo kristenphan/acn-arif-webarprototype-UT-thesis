@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "webar-stack-azure"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-s901cimwdr7j"
+s3_prefix = "webar-stack-azure"
+region = "eu-central-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []
