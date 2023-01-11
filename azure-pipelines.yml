@@ -35,13 +35,8 @@ steps:
 - script: |
     cd ./webar-lambda-test3
     sam build
-    ls
   displayName: "Run sam build"
 
-- script: |
-    ls
-  displayName: "Doublecheck current directory"
-  
 - task: AWSShellScript@1
   inputs:
     awsCredentials: 'aws-sc'
