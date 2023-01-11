@@ -1,0 +1,10 @@
+{
+  "name": "webar-lambda-watermeselect",
+  "description": "Query ddb for watering history",
+  "main": "app.js",
+  "author": "kristen.phan@accenture.com",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.199.0"
+  }
+}
