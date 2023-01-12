@@ -231,7 +231,7 @@ Resources:
       Environment:
         Variables:
           DDBTABLENAME: !Ref SensorDataDDB
-      Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-sensordataselect-role-zs2avpze
+      Role: !GetAtt SensorDataSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
         Cors: 
@@ -241,6 +241,37 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
+  SensorDataSelectFunctionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: webar-role-lambdasensordataselect
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Principal:
+              Service: "lambda.amazonaws.com"
+            Effect: Allow
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: AWSLambdaBasicExecutionRole
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "logs:CreateLogGroup"
+                Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+              - Effect: Allow
+                Action: 
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: !GetAtt SensorDataSelectFunction.Arn
+        - PolicyName: QueryDDB
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: "dynamodb:Query"
+                Resource: !GetAtt SensorDataDDB.Arn
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -263,6 +294,7 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
+              
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
     Properties:
