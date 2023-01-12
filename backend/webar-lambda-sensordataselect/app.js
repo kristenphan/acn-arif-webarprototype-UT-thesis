@@ -1,7 +1,6 @@
 import {DynamoDBClient, QueryCommand} from "@aws-sdk/client-dynamodb";
 let response;
 const DDBREGION = "eu-central-1"
-//const DDBTABLENAME = "webar-ddb-sensordata";
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
