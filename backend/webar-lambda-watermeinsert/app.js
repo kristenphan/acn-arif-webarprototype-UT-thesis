@@ -2,7 +2,7 @@ import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {DynamoDBDocumentClient, PutCommand} from "@aws-sdk/lib-dynamodb";
 
 const REGION = "eu-central-1";
-const TABLENAME = "webar-ddb-wateringhistory";
+const DDBTABLENAME = process.env.DDBTABLENAME;
 
 // Return true if function executes successfully. Otherwise, return false
 export const handler = async (event) => {
@@ -18,7 +18,7 @@ export const handler = async (event) => {
     
     // Create params of PutCommand ie., putItem()
     const params = {
-        TableName: TABLENAME,
+        TableName: DDBTABLENAME,
         Item: {
             "plantId": plantId, // partition key type NUMBER
             "timeEpoch": timeEpoch, // sort key NUMBER

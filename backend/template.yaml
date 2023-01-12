@@ -278,6 +278,9 @@ Resources:
       FunctionName: webar-lambda-watermeinsert2
       Tags:
         project: webar
+      Environment:
+        Variables:
+          DDBTABLENAME: !Ref WateringHistoryDDB
       Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-watermeinsert-role-01ns09dc
       FunctionUrlConfig:
         AuthType: NONE
