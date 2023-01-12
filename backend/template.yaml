@@ -428,7 +428,7 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "dynamodb:PutItem",
+            Action: "dynamodb:PutItem"
             Resource: !GetAtt WateringHistoryDDB.Arn
       Roles: 
         - !Ref WaterMeInsertFunctionRole
