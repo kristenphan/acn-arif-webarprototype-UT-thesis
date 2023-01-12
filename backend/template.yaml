@@ -245,6 +245,9 @@ Resources:
     Type: "AWS::IAM::Role"
     Properties:
       RoleName: webar-role-lambdasensordataselect
+      Tags: 
+        - Key: "project"
+          Value: "webar"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
