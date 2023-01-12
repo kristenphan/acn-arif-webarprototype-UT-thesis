@@ -10,7 +10,7 @@ Globals:
 
 Resources:
   ##########################################################################
-  #   DynamoDB(s)                                                          #
+  #   DynamoDB                                                             #
   ##########################################################################
   SensorDataDDB:
     Type: AWS::DynamoDB::Table
@@ -215,7 +215,7 @@ Resources:
           PredefinedMetricType: DynamoDBReadCapacityUtilization
 
   ##########################################################################
-  #   Lambda Function(s)                                                   #
+  #   Lambda                                                               #
   ##########################################################################
   SensorDataSelectFunction:
     Type: AWS::Serverless::Function 
@@ -241,49 +241,6 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
-  SensorDataSelectFunctionRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      RoleName: webar-role-lambdasensordataselect
-      Tags: 
-        - Key: "project"
-          Value: "webar"
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Principal:
-              Service: "lambda.amazonaws.com"
-            Effect: Allow
-            Action: "sts:AssumeRole"
-  SensorDataSelectFunctionBasicExecutionPolicy:
-    Type: AWS::IAM::Policy
-    Properties: 
-      PolicyName: webar-policy-sensordataselectbasicexecutionpolicy
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
-          - Effect: Allow
-            Action: 
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect2:*"
-      Roles: 
-        - !Ref SensorDataSelectFunctionRole
-  SensorDataSelectFunctionQueryDDBPolicy:
-    Type: AWS::IAM::Policy
-    Properties: 
-      PolicyName: webar-policy-sensordataselectqueryddbpolicy
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Action: "dynamodb:Query"
-            Resource: !GetAtt SensorDataDDB.Arn
-      Roles: 
-        - !Ref SensorDataSelectFunctionRole
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -328,6 +285,54 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d287cl5btunnv2.cloudfront.net
+  
+  ##########################################################################
+  #   IAM                                                                  #
+  ##########################################################################
+  SensorDataSelectFunctionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: webar-role-lambdasensordataselect
+      Tags: 
+        - Key: "project"
+          Value: "webar"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Principal:
+              Service: "lambda.amazonaws.com"
+            Effect: Allow
+            Action: "sts:AssumeRole"
+  SensorDataSelectFunctionBasicExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-sensordataselectbasicexecutionpolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "logs:CreateLogGroup"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+          - Effect: Allow
+            Action: 
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect2:*"
+      Roles: 
+        - !Ref SensorDataSelectFunctionRole
+  SensorDataSelectFunctionQueryDDBPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-sensordataselectqueryddbpolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "dynamodb:Query"
+            Resource: !GetAtt SensorDataDDB.Arn
+      Roles: 
+        - !Ref SensorDataSelectFunctionRole
+
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
