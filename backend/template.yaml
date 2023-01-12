@@ -281,7 +281,7 @@ Resources:
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
-      Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-watermeinsert-role-01ns09dc
+      Role: !GetAtt WaterMeInsertFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
         Cors: 
