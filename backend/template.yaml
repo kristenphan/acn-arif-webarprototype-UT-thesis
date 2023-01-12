@@ -303,6 +303,7 @@ Resources:
               Service: "lambda.amazonaws.com"
             Effect: Allow
             Action: "sts:AssumeRole"
+
   SensorDataSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
@@ -320,6 +321,7 @@ Resources:
             Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect2:*"
       Roles: 
         - !Ref SensorDataSelectFunctionRole
+
   SensorDataSelectFunctionQueryDDBPolicy:
     Type: AWS::IAM::Policy
     Properties: 
@@ -333,6 +335,52 @@ Resources:
       Roles: 
         - !Ref SensorDataSelectFunctionRole
 
+  WaterMeSelectFunctionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: webar-role-lambdawatermeselect
+      Tags: 
+        - Key: "project"
+          Value: "webar"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Principal:
+              Service: "lambda.amazonaws.com"
+            Effect: Allow
+            Action: "sts:AssumeRole"
+
+  WaterMeSelectFunctionBasicExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-watermeselectbasicexecutionpolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "logs:CreateLogGroup"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+          - Effect: Allow
+            Action: 
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect2:*"
+      Roles: 
+        - !Ref WaterMeSelectFunctionRole
+
+  WaterMeSelectFunctionQueryDDBPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-watermeselectqueryddbpolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "dynamodb:Query"
+            Resource: !GetAtt WateringHistoryDDB.Arn
+      Roles: 
+        - !Ref WaterMeSelectFunctionRole
+        
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
