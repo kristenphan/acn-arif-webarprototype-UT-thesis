@@ -253,7 +253,10 @@ Resources:
       FunctionName: webar-lambda-watermeselect2
       Tags:
         project: webar
-      Role: arn:aws:iam::268357442233:role/service-role/webar-lambda-watermeselect-role-lr682h8c
+      Environment:
+        Variables:
+          DDBTABLENAME: !Ref WateringHistoryDDB
+      Role: !GetAtt WaterMeSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
         Cors: 
@@ -380,7 +383,7 @@ Resources:
             Resource: !GetAtt WateringHistoryDDB.Arn
       Roles: 
         - !Ref WaterMeSelectFunctionRole
-        
+
 Outputs:
   SensorDataSelectFunction:
     Description: "Query sensor data from ddb"
