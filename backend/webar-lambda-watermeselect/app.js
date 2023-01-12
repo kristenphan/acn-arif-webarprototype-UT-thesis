@@ -1,7 +1,7 @@
 import {DynamoDBClient, QueryCommand} from "@aws-sdk/client-dynamodb";
 
 const REGION = "eu-central-1";
-const DDBTABLENAME = "webar-ddb-wateringhistory";
+const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
     // Extract params from event
