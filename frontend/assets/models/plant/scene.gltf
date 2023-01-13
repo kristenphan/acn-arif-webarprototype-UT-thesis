@@ -1,0 +1,475 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.1236710324883461,
+        0.12420400232076645,
+        0.23266983032226563
+      ],
+      "min": [
+        -0.1235797107219696,
+        -0.12328789383172989,
+        -0.0003038122085854411
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 20280,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.998702347278595,
+        0.9983552098274231,
+        0.9999970197677612
+      ],
+      "min": [
+        -0.998532772064209,
+        -0.998382568359375,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.9973785877227783,
+        0.9968787431716919,
+        0.9999985098838806,
+        1.0
+      ],
+      "min": [
+        -0.9972139000892639,
+        -0.997056245803833,
+        -0.9999990463256836,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.985978901386261,
+        0.9999998211860657
+      ],
+      "min": [
+        4.278656149381277e-07,
+        3.9010080854495754e-07
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 13520,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.985978901386261,
+        0.9999998211860657
+      ],
+      "min": [
+        4.278656149381277e-07,
+        3.9010080854495754e-07
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 27040,
+      "componentType": 5126,
+      "count": 1690,
+      "max": [
+        0.985978901386261,
+        0.9999998211860657
+      ],
+      "min": [
+        4.278656149381277e-07,
+        3.9010080854495754e-07
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 9504,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 40560,
+      "componentType": 5126,
+      "count": 3710,
+      "max": [
+        0.27731168270111084,
+        0.2342996746301651,
+        0.7626546025276184
+      ],
+      "min": [
+        -0.3227529227733612,
+        -0.2844035029411316,
+        0.11810774356126785
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 85080,
+      "componentType": 5126,
+      "count": 3710,
+      "max": [
+        0.9996545910835266,
+        0.999118447303772,
+        0.9938482642173767
+      ],
+      "min": [
+        -0.9997702240943909,
+        -0.9997644424438477,
+        -0.9986492395401001
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 27040,
+      "componentType": 5126,
+      "count": 3710,
+      "max": [
+        0.9999361038208008,
+        0.9999026656150818,
+        0.9989210963249207,
+        1.0
+      ],
+      "min": [
+        -0.9999938011169434,
+        -0.999860942363739,
+        -0.9994159936904907,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 40560,
+      "componentType": 5126,
+      "count": 3710,
+      "max": [
+        0.9971593022346497,
+        1.0038981437683105
+      ],
+      "min": [
+        0.0010844320058822632,
+        -0.015871664509177208
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 38016,
+      "componentType": 5125,
+      "count": 17388,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "AllQuad (https://sketchfab.com/AllQuad)",
+      "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)",
+      "source": "https://sketchfab.com/3d-models/monstera-deliciosa-swisscheese-efea5f3543d64df1aa09be1b0ec34f12",
+      "title": "Monstera Deliciosa SwissCheese"
+    },
+    "generator": "Sketchfab-12.97.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 107568,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 70240,
+      "byteOffset": 107568,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 129600,
+      "byteOffset": 177808,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 86400,
+      "byteOffset": 307408,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 393808,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/CERAMIC_POT_Mat_baseColor.png"
+    },
+    {
+      "uri": "textures/CERAMIC_POT_Mat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/CERAMIC_POT_Mat_normal.png"
+    },
+    {
+      "uri": "textures/MONSTERA_Deliciosa_Mat_baseColor.png"
+    },
+    {
+      "uri": "textures/MONSTERA_Deliciosa_Mat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/MONSTERA_Deliciosa_Mat_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "CERAMIC_POT_Mat",
+      "normalTexture": {
+        "index": 2
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "MONSTERA_Deliciosa_Mat",
+      "normalTexture": {
+        "index": 5
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CERAMIC_POT_MONSTERA_CERAMIC_POT_Mat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5
+          },
+          "indices": 6,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "MONSTERA_DELICIOSA_MONSTERA_Deliciosa_Mat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 8,
+            "POSITION": 7,
+            "TANGENT": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "a63507990caa48429d3b917fae5944a8.fbx"
+    },
+    {
+      "children": [
+        3,
+        5
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.629206793918314e-05,
+        -99.99999999999868,
+        0.0,
+        0.0,
+        99.99999999999868,
+        -1.629206793918314e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "CERAMIC_POT_MONSTERA"
+    },
+    {
+      "mesh": 0,
+      "name": "CERAMIC_POT_MONSTERA_CERAMIC_POT_Mat_0"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.629206793918314e-05,
+        -99.99999999999868,
+        0.0,
+        0.0,
+        99.99999999999868,
+        -1.629206793918314e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "MONSTERA_DELICIOSA"
+    },
+    {
+      "mesh": 1,
+      "name": "MONSTERA_DELICIOSA_MONSTERA_Deliciosa_Mat_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}

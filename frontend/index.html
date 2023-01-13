@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<!-- mindar-image-three-prod.js@1.1.5 has three.js@0.136.0 as dependency -->
+		<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-three.prod.js"></script>
+		<!-- for hand gesture detection -->
+		<script> window.tf = window.MINDAR.IMAGE.tf; </script>
+    <script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
+		<!-- TODO: install fingerpose using npm instead: https://github.com/andypotato/fingerpose -->
+    <script src='./assets/libs/fingerpose.js'></script>
+		<!-- end -->
+		<script src="./dist/index.bundle.js" type="module"></script>
+		<link rel="stylesheet" href="./assets/styles/styles.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+		<title>Home Dashboard</title>
+	</head>
+	<body>
+		<div id="dashboard">
+			<div id="dashboard-header">
+				<div id="dashboard-headline">
+					<img id="headline-image" src="../assets/images/acn.png" alt="acn-logo"/>
+					<div id="headline-text">Hello from Vincent van Grow! &#x1F44B; </div>
+				</div>
+			</div>
+			<div id="dashboard-footer">Powered by 
+				<a href="https://liquidstudio.nl/" target="_blank">
+					<img id ="ls-logo" src="../assets/images/ls-nl.PNG" alt="liquid-studio-logo" width="102" height="50">
+				</a>
+			</div>
+			<div id="dashboard-home">
+				<div class="dashboard-title">How am I feeling?</div>
+				<img id="water-cup" src="../assets/images/water-high.png" alt="water-cup"/>
+				<div id="moisture-reading">Soil moisture: ...</div>
+				<div id="moisture-timestamp">As of: ...</div>
+				<div id="dashboard-home-buttons">
+					<button id="home-getupdates-button" class="button">Get Updates</button>
+					<button id="home-waterme-button" class="button">Water Me</button>
+					<button id="home-viewhistory-button" class="button">View History</button>
+					<button id="home-aboutme-button" class="button">About Me</button>
+				</div>
+			</div>
+			<div id="dashboard-aboutme-page1" class="hidden">
+				<div class="dashboard-title">Who am I?</div>
+				<div id="" class="dashboard-text">People also call me Swiss Cheese plant &#x1F9C0;. Walk around and view me in 3D!</div>
+				<div class="dashboard-aboutme-page1-buttons">
+					<button id="aboutme-page1-back-button" class="button dashboard-aboutme-back-button">&lt; Back</button>
+					<button id="aboutme-page1-next-button" class="button">Next &gt;</button>
+				</div>
+			</div>	
+			<div id="dashboard-aboutme-page2" class="hidden">
+				<div class="dashboard-title">Who am I?</div>
+				<div id="" class="dashboard-text">Watch the video for artworks about me and tips on how to care for me.</div>
+				<div id="vimeo-video">
+					<iframe src="https://player.vimeo.com/video/399995471?h=a0dd33ac0f&title=0&byline=0&portrait=0"
+								width="640"
+								height="360">
+					</iframe>
+				</div>
+				<div class="dashboard-aboutme-page2-buttons">
+					<button id="aboutme-page2-back-button" class="button dashboard-aboutme-back-button">&lt; Back</button>	
+					<button id="aboutme-page2-return-button" class="button">Return &gt;</button>
+				</div>
+			</div>
+			<div id="dashboard-viewhistory" class="hidden">
+				<div class="dashboard-title">When was I last watered?</div>
+				<div class="watering-record">
+					<img id="status1" class="status-icon thumb-down" src="../assets/images/thumb-down.png" alt="plant-status"/>
+					<div id="record1">...</div>
+				</div>
+				<div class="watering-record">
+					<img id="status2" class="status-icon thumb-up" src="../assets/images/thumb-up.png" alt="plant-status"/>
+					<div id="record2">...</div>
+				</div>
+				<div class="watering-record">
+					<img id="status3" class="status-icon thumb-up" src="../assets/images/thumb-up.png" alt="plant-status"/>
+					<div id="record3">...</div>
+				</div>
+				<div class="dashboard-viewhistory-buttons">
+					<button id="viewhistory-return-button" class="button">Return &gt;</button>
+				</div>	
+			</div>	
+		</div>
+	</body>
+</html>

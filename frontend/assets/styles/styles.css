@@ -1,0 +1,180 @@
+html {
+	font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none; /** Use display:none instead of visibility:hidden so that hidden elements do not take up space **/
+}
+
+#dashboard {
+  visibility: hidden; 
+  background: white;
+  width: 1200px;
+  height: 700px;
+  border: 5px solid;
+  padding: 40px;
+	border-radius: 20px;
+  position: relative;
+	/* opacity: 80%; */
+}
+
+#dashboard-header {
+  width: 1150px;
+  margin-bottom: 30px;
+  border-bottom: 4px solid black;
+  white-space: nowrap; /** force headline-image and headline-text to stay side by side **/
+  padding: 20px;
+  display: flex;
+  align-items: center; /** Vertically aligned headline-image and headline-text **/
+}
+
+#dashboard-footer {
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  display: flex;
+  align-items: center; /** Vertically aligned text "Powered by" and ls-logo **/
+  font-size: 20px;
+}
+
+#headline-image {
+	height: 70px;
+  width: 70px;
+}
+
+#headline-text {
+	display: inline-block;
+  margin-left: 10px;
+	font-size: 60px;
+	font-weight: bold;
+}
+
+#dashboard-home {
+  padding-left: 20px;
+}
+
+#dashboard-home-buttons {
+  position: absolute;
+  top: 0;
+  margin-top: 220px;
+  padding-left: 750px;
+}
+
+.button {
+  width: 350px;
+  height: 100px;
+  background: GhostWhite;
+  border: dashed 4px #9f1be5;
+  border-radius: 20px;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+	font-size: 50px;
+	font-weight: regular;
+  margin-top: 25px;
+  margin-left: 50px;
+}
+
+#water-cup {
+  width: 200px;
+  height: 250px;
+	margin-top: 70px;
+	margin-left: 150px;
+  margin-bottom: 50px;
+}
+
+#moisture-reading {
+	font-size: 50px;
+	font-weight: bold;
+  margin-left: 50px;
+}
+
+#moisture-timestamp {
+  font-size: 25px;
+  font-style: italic;
+  margin-left: 95px;
+}
+
+.dashboard-text {
+  font-size: 40px;
+  font-weight: regular;
+  font-style: italic;
+	padding: 50px;
+}
+
+.dashboard-aboutme-page1-buttons {
+  white-space: nowrap; /** force buttons to stay side by side **/
+  margin-top: 170px;
+  margin-left: 130px;
+}
+
+.dashboard-aboutme-back-button {
+  margin-right: 230px;
+}
+
+.dashboard-aboutme-page2-buttons {
+  white-space: nowrap; /** force buttons to stay side by side **/
+  margin-top: 60px;
+  margin-left: 130px;
+}
+
+.dashboard-viewhistory-buttons {
+  position: absolute;
+  bottom: 50px; 
+  right: 180px;
+}
+
+#vimeo-video {
+  position: relative;
+  left: 250px;
+}
+
+form {
+  text-align: left;
+  font-size: 16px;
+}
+
+#button-submit {
+  background-color: #9f1be5;
+  border-radius: 5px;
+  color: white;
+  font-size: 15px;
+}
+
+#button-return {
+  background-color: lightgray;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.watering-record {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin:30px 50px 30px 150px;
+  font-size: 40px;
+}
+
+.status-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+
+.thumb-down {
+  border: solid 3px black;
+}
+
+.thumb-up {
+  border: solid 3px #9f1be5;
+}
+
+#watering-history-timestamp {
+  font-size: 30px;
+  font-style: italic;
+  margin-left: 50px;
+}
