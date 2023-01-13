@@ -44,6 +44,16 @@ jobs:
       awsArguments: 's3://webar-s3-frontend --recursive'
       failOnStandardError: true
     displayName: "Emtpy existing webar-s3-frontend bucket"
+    
+  - task: AWSCLI@1
+    inputs:
+      awsCredentials: 'aws-sc'
+      regionName: 'eu-central-1'
+      awsCommand: 's3'
+      awsSubCommand: 'cp'
+      awsArguments: './frontend/dist s3://webar-s3-frontend --recursive'
+      failOnStandardError: true
+    displayName: "Upload build artifacts to S3 bucket webar-s3-frontend"
 
 - job: BuildandDeployBackend
   steps:
