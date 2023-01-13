@@ -8,6 +8,12 @@ Globals:
     Timeout: 3
     MemorySize: 128
 
+Parameters:
+  AWSRegionParam:
+    Description: Region in which AWS resources are deployed
+    Type: String
+    Default: eu-central-1
+
 Resources:
   ##########################################################################
   #   DynamoDB                                                             #
@@ -231,6 +237,7 @@ Resources:
       Environment:
         Variables:
           DDBTABLENAME: !Ref SensorDataDDB
+          AWSREGION: !Ref AWSRegionParam
       Role: !GetAtt SensorDataSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE

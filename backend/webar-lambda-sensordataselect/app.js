@@ -1,6 +1,7 @@
 import {DynamoDBClient, QueryCommand} from "@aws-sdk/client-dynamodb";
 let response;
-const DDBREGION = "eu-central-1"
+//const AWSREGION = "eu-central-1"
+const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
@@ -8,7 +9,7 @@ export const handler = async (event) => {
 	const sensorId = JSON.parse(event.body).sensorId;
 	
 	// Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
-	const ddbClient = new DynamoDBClient({region: DDBREGION});
+	const ddbClient = new DynamoDBClient({region: AWSREGION});
 	
 	const params = {
 		TableName: DDBTABLENAME,
