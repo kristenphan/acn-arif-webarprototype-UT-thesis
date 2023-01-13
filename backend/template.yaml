@@ -263,6 +263,7 @@ Resources:
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
+          AWSREGION: !Ref AWSRegionParam
       Role: !GetAtt WaterMeSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -288,6 +289,7 @@ Resources:
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
+          AWSREGION: !Ref AWSRegionParam
       Role: !GetAtt WaterMeInsertFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
