@@ -28,6 +28,11 @@ jobs:
       command: 'custom'
       workingDir: './frontend'
       customCommand: 'run build'
+  
+  - task: CmdLine@2
+    inputs:
+      script: 'ls'
+    displayName: "Run ls"
 
 - job: BuildandDeployBackend
   steps:
