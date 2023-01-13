@@ -75,6 +75,16 @@ jobs:
       failOnStandardError: true
     displayName: "Upload ./dist to S3 bucket webar-s3-frontend"
 
+  - task: AWSCLI@1
+    inputs:
+      awsCredentials: 'aws-sc'
+      regionName: 'eu-central-1'
+      awsCommand: 's3'
+      awsSubCommand: 'sync'
+      awsArguments: './frontend/assets s3://webar-s3-frontend/assets'
+      failOnStandardError: true
+    displayName: "Upload ./assets to S3 bucket webar-s3-frontend"
+
 - job: BuildandDeployBackend
   steps:
   - task: NodeTool@0
