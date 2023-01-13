@@ -1,7 +1,7 @@
 import insertWateringRecord from "./insertwateringrecord";
 
 const plantId = 1;
-const LambdaFunctionURLWaterMeInsert = "https://7fnzpjplpoorwao2zg3ckrylge0natas.lambda-url.eu-central-1.on.aws/"; 
+const LambdaFunctionURLWaterMeInsert = process.env.LAMBDAFUNCTIONURLWATERMEINSERT; 
 
 // Wait until html finishes loading, 
 // then invoke a lambda function to write a new watering record in backend database

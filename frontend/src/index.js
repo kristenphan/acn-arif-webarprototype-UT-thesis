@@ -6,8 +6,9 @@ import getMoistureData from "./getmoisturedata";
 import transformTimestamp from "./transformtimestamp";
 import getWateringHistory from "./getwateringhistory";
 
-const LambdaFunctionURLSensorDataSelect = "https://7krqpeuuicfgvw2soeojunszlu0aqepm.lambda-url.eu-central-1.on.aws/";
-const LambdaFunctionURLWaterMeSelect = "https://2m7p7drrbg5trn2n6b5mkitftu0jqmjl.lambda-url.eu-central-1.on.aws/";
+//const LambdaFunctionURLSensorDataSelect = "https://7krqpeuuicfgvw2soeojunszlu0aqepm.lambda-url.eu-central-1.on.aws/";
+const LambdaFunctionURLSensorDataSelect = process.env.LAMBDAFUNCTIONURLSENSORDATASELECT;
+const LambdaFunctionURLWaterMeSelect = process.env.LAMBDAFUNCTIONURLWATERMESELECT;
 const moistureSensorId = "1";
 const plantId = "1";
 const LSURL = "https://liquidstudio.nl/";
