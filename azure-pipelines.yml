@@ -9,47 +9,68 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: "16.x"
-  displayName: "Install Node.js"
+jobs:
+- job: BuildandDeployFrontend
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x"
+    displayName: "Install Node.js"
 
-- script: pip install aws-sam-cli
-  displayName: "Install AWS SAM CLI"
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: './frontend'
+    displayName: "Install npm modules for threejs frontend"
 
-- script: sam --version
-  displayName: "Confirm AWS SAM CLI installed"
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      workingDir: './frontend'
+      customCommand: 'run build'
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: './backend/webar-lambda-sensordataselect'
-  displayName: "Install npm modules for webar-lambda-sensordataselect"
+- job: BuildandDeployBackend
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x"
+    displayName: "Install Node.js"
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: './backend/webar-lambda-watermeselect'
-  displayName: "Install npm modules for webar-lambda-watermeselect"
+  - script: pip install aws-sam-cli
+    displayName: "Install AWS SAM CLI"
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: './backend/webar-lambda-watermeinsert'
-  displayName: "Install npm modules for webar-lambda-watermeinsert"
+  - script: sam --version
+    displayName: "Confirm AWS SAM CLI installed"
 
-- script: |
-    cd ./backend
-    sam build
-  displayName: "Run sam build"
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: './backend/webar-lambda-sensordataselect'
+    displayName: "Install npm modules for webar-lambda-sensordataselect"
 
-- task: AWSShellScript@1
-  inputs:
-    awsCredentials: 'aws-sc'
-    regionName: 'eu-central-1'
-    scriptType: 'inline'
-    inlineScript: 'sam deploy'
-    disableAutoCwd: true
-    workingDirectory: './backend'
-  displayName: "Deploy sam build artifacts to aws"
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: './backend/webar-lambda-watermeselect'
+    displayName: "Install npm modules for webar-lambda-watermeselect"
+
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: './backend/webar-lambda-watermeinsert'
+    displayName: "Install npm modules for webar-lambda-watermeinsert"
+
+  - script: |
+      cd ./backend
+      sam build
+    displayName: "Run sam build"
+
+  - task: AWSShellScript@1
+    inputs:
+      awsCredentials: 'aws-sc'
+      regionName: 'eu-central-1'
+      scriptType: 'inline'
+      inlineScript: 'sam deploy'
+      disableAutoCwd: true
+      workingDirectory: './backend'
+    displayName: "Deploy sam build artifacts to aws"
