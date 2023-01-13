@@ -4,7 +4,6 @@ const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
-	console.log("Testing");
 	// Extract params from event
 	const sensorId = JSON.parse(event.body).sensorId;
 	
