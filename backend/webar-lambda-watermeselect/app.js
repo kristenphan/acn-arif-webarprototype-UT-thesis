@@ -1,6 +1,6 @@
 import {DynamoDBClient, QueryCommand} from "@aws-sdk/client-dynamodb";
 
-const REGION = "eu-central-1";
+const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
@@ -9,7 +9,7 @@ export const handler = async (event) => {
     const plantIdStr = String(body.plantId);
 
     // Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
-    const ddbClient = new DynamoDBClient({region: REGION});
+    const ddbClient = new DynamoDBClient({region: AWSREGION});
     
     const params = {
         TableName: DDBTABLENAME,

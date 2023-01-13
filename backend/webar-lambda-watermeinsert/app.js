@@ -1,7 +1,7 @@
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {DynamoDBDocumentClient, PutCommand} from "@aws-sdk/lib-dynamodb";
 
-const REGION = "eu-central-1";
+const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
 // Return true if function executes successfully. Otherwise, return false
@@ -13,7 +13,7 @@ export const handler = async (event) => {
     const plantStatus = body.plantStatus;
     
     // Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
-    const ddbClient = new DynamoDBClient({region: REGION});
+    const ddbClient = new DynamoDBClient({region: AWSREGION});
     const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
     
     // Create params of PutCommand ie., putItem()

@@ -1,6 +1,5 @@
 import {DynamoDBClient, QueryCommand} from "@aws-sdk/client-dynamodb";
 let response;
-//const AWSREGION = "eu-central-1"
 const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
