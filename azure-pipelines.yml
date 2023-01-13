@@ -35,18 +35,15 @@ jobs:
       script: 'cd ./frontend; ls'
     displayName: "Run ls"
     
-  - task: S3Upload@1
+  - task: AWSCLI@1
     inputs:
       awsCredentials: 'aws-sc'
       regionName: 'eu-central-1'
-      bucketName: 'webar-s3-frontend'
-      sourceFolder: './frontend/dist'
-      globExpressions: '**'
-      createBucket: true
-      keyManagement: 'awsManaged'
-      encryptionAlgorithm: 'AES256'
-      logRequest: true
-      logResponse: true
+      awsCommand: 's3'
+      awsSubCommand: 'rm'
+      awsArguments: 's3://webar-s3-frontend --recursive'
+      failOnStandardError: true
+    displayName: "Emtpy existing webar-s3-frontend bucket"
 
 - job: BuildandDeployBackend
   steps:
