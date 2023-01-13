@@ -10,3 +10,4 @@ confirm_changeset = false
 capabilities = "CAPABILITY_NAMED_IAM"
 disable_rollback = true
 image_repositories = []
+fail_on_empty_changeset = false
