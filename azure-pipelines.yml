@@ -28,10 +28,11 @@ jobs:
       command: 'custom'
       workingDir: './frontend'
       customCommand: 'run build'
+    displayName: "Run npm run build"
   
   - task: CmdLine@2
     inputs:
-      script: 'ls'
+      script: 'cd ./frontend; ls'
     displayName: "Run ls"
 
 - job: BuildandDeployBackend
