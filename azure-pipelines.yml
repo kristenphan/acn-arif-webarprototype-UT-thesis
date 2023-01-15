@@ -24,7 +24,7 @@ jobs:
     displayName: "Confirm AWS SAM CLI installed"
 
   - script: |
-      cd ./backend
+      cd ./frontend
       sam build
     displayName: "Run sam build"
 
@@ -35,7 +35,7 @@ jobs:
       scriptType: 'inline'
       inlineScript: 'sam deploy'
       disableAutoCwd: true
-      workingDirectory: './backend'
+      workingDirectory: './frontend'
     displayName: "Deploy sam build artifacts to aws using sam template.yaml"
 
   - task: Npm@1
