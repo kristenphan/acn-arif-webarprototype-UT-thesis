@@ -8,6 +8,6 @@ s3_prefix = "webar-stack-frontend"
 region = "eu-central-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_NAMED_IAM"
-disable_rollback = true
+disable_rollback = false
 image_repositories = []
 fail_on_empty_changeset = false
