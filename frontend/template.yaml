@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Deploy the frontend of WebAR prototype using SAM template.yaml
+Parameters:
+  AWSRegionParam:
+    Description: Region in which AWS resources are deployed
+    Type: String
+    Default: eu-central-1
+  FRONTENDS3BUCKETNAMEPARAM:
+    Description: Name of S3 bucket storing frontend's static assets (HTML, CSS, JS)
+    Type: String
+    Default: webar-s3-frontend2
+  RESOURCETAGKEYPARAM:
+    Description: Key of the key-value tag of a AWS resource
+    Type: String
+    Default: project
+  RESOURCETAGVALUEPARAM:
+    Description: Value of the key-value tag of a AWS resource
+    Type: String
+    Default: webar
+  
+Resources:
+  ##########################################################################
+  #   S3                                                                   #
+  ##########################################################################
+  FrontendS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: !Ref FRONTENDS3BUCKETNAMEPARAM
+      AccessControl: PublicRead
+      Tags: 
+        - Key: !Ref RESOURCETAGKEYPARAM
+          Value: !Ref RESOURCETAGVALUEPARAM
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  ##########################################################################
+  #   CloudFront CDN                                                       #
+  ##########################################################################
+    
+  ##########################################################################
+  #   IAM                                                                  #
+  ##########################################################################
+  
+Outputs:
+  FrontendS3Bucket:
+    Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)"
+    Value: !GetAtt FrontendS3Bucket.WebsiteURL
