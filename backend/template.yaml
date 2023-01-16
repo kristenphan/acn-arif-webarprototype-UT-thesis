@@ -21,6 +21,18 @@ Parameters:
     Description: Name of dynamodb table storing watering history
     Type: String
     Default: webar-ddb-wateringhistory2
+  SensorDataSelectFunctionName:
+    Description: Name of lambda function querying sensor data from ddb
+    Type: String
+    Default: webar-lambda-sensordataselect2
+  WaterMeSelectFunctionName:
+    Description: Name of lambda function querying watering records from ddb
+    Type: String
+    Default: webar-lambda-watermeselect2
+  WaterMeInsertFunctionName:
+    Description: Name of lambda function inserting a new watering record to ddb
+    Type: String
+    Default: webar-lambda-watermeinsert2
   
 Resources:
   ##########################################################################
@@ -239,7 +251,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-sensordataselect2
+      FunctionName: !Ref SensorDataSelectFunctionName
       Tags:
         project: webar
       Environment:
@@ -265,7 +277,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-watermeselect2
+      FunctionName: !Ref WaterMeSelectFunctionName
       Tags:
         project: webar
       Environment:
