@@ -33,7 +33,7 @@ jobs:
       awsCredentials: 'aws-sc'
       regionName: 'eu-central-1'
       scriptType: 'inline'
-      inlineScript: 'sam deploy'
+      inlineScript: 'ls; sam deploy'
       disableAutoCwd: true
       workingDirectory: './frontend'
     displayName: "Deploy sam build artifacts to aws using sam template.yaml"
@@ -147,7 +147,7 @@ jobs:
       awsCredentials: 'aws-sc'
       regionName: 'eu-central-1'
       scriptType: 'inline'
-      inlineScript: 'sam deploy'
+      inlineScript: 'ls; sam deploy'
       disableAutoCwd: true
       workingDirectory: './backend'
     displayName: "Deploy sam build artifacts to aws using sam template.yaml"
