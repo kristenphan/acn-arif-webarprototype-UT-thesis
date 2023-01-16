@@ -33,6 +33,18 @@ Parameters:
     Description: Name of lambda function inserting a new watering record to ddb
     Type: String
     Default: webar-lambda-watermeinsert2
+  SensorDataSelectFunctionRoleName:
+    Description: Name of IAM role attached to lambda function querying sensor data from ddb
+    Type: String
+    Default: webar-role-lambdasensordataselect
+  WaterMeSelectFunctionRoleName:
+    Description: Name of IAM role attached to lambda function querying watering records from ddb
+    Type: String
+    Default: webar-role-lambdawatermeselect
+  WaterMeInsertFunctionRoleName:
+    Description: Name of IAM role attached to lambda function inserting a new watering record to ddb
+    Type: String
+    Default: webar-role-lambdawatermeinsert
   
 Resources:
   ##########################################################################
@@ -303,7 +315,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-watermeinsert2
+      FunctionName: !Ref WaterMeInsertFunctionName
       Tags:
         project: webar
       Environment:
@@ -327,7 +339,7 @@ Resources:
   SensorDataSelectFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: webar-role-lambdasensordataselect
+      RoleName: !Ref SensorDataSelectFunctionRoleName
       Tags: 
         - Key: "project"
           Value: "webar"
@@ -373,7 +385,7 @@ Resources:
   WaterMeSelectFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: webar-role-lambdawatermeselect
+      RoleName: !Ref WaterMeSelectFunctionRoleName
       Tags: 
         - Key: "project"
           Value: "webar"
@@ -419,7 +431,7 @@ Resources:
   WaterMeInsertFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: webar-role-lambdawatermeinsert
+      RoleName: !Ref WaterMeInsertFunctionRoleName
       Tags: 
         - Key: "project"
           Value: "webar"
