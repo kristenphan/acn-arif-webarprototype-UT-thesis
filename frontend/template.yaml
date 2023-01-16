@@ -3,19 +3,15 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   Deploy the frontend of WebAR prototype using SAM template.yaml
 Parameters:
-  AWSRegionParam:
-    Description: Region in which AWS resources are deployed
-    Type: String
-    Default: eu-central-1
-  FRONTENDS3BUCKETNAMEPARAM:
+  FrontendS3BucketName:
     Description: Name of S3 bucket storing frontend's static assets (HTML, CSS, JS)
     Type: String
     Default: webar-s3-frontend2
-  RESOURCETAGKEYPARAM:
+  ResourceKey:
     Description: Key of the key-value tag of a AWS resource
     Type: String
     Default: project
-  RESOURCETAGVALUEPARAM:
+  ResourceValue:
     Description: Value of the key-value tag of a AWS resource
     Type: String
     Default: webar
@@ -27,10 +23,10 @@ Resources:
   FrontendS3Bucket:
     Type: AWS::S3::Bucket
     Properties: 
-      BucketName: !Ref FRONTENDS3BUCKETNAMEPARAM
+      BucketName: !Ref FrontendS3BucketName
       Tags: 
-        - Key: !Ref RESOURCETAGKEYPARAM
-          Value: !Ref RESOURCETAGVALUEPARAM
+        - Key: !Ref ResourceKey
+          Value: !Ref ResourceValue
       WebsiteConfiguration:
         IndexDocument: index.html
       BucketEncryption:
