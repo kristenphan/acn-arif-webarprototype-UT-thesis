@@ -24,7 +24,7 @@ Parameters:
   SensorDataSelectFunctionName:
     Description: Name of lambda function querying sensor data from ddb
     Type: String
-    Default: webar-lambda-sensordataselect222
+    Default: webar-lambda-sensordataselect2
   WaterMeSelectFunctionName:
     Description: Name of lambda function querying watering records from ddb
     Type: String
