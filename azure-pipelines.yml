@@ -72,9 +72,9 @@ jobs:
       regionName: 'eu-central-1'
       awsCommand: 's3'
       awsSubCommand: 'cp'
-      awsArguments: './frontend/index.html s3://webar-s3-frontend2'
+      awsArguments: './frontend/index.html s3://webar-s3-frontend'
       failOnStandardError: true
-    displayName: "Upload index.html to S3 bucket webar-s3-frontend2"
+    displayName: "Upload index.html to S3 bucket webar-s3-frontend"
 
   - task: AWSCLI@1
     inputs:
@@ -82,9 +82,9 @@ jobs:
       regionName: 'eu-central-1'
       awsCommand: 's3'
       awsSubCommand: 'cp'
-      awsArguments: './frontend/waterme.html s3://webar-s3-frontend2'
+      awsArguments: './frontend/waterme.html s3://webar-s3-frontend'
       failOnStandardError: true
-    displayName: "Upload waterme.html to S3 bucket webar-s3-frontend2"
+    displayName: "Upload waterme.html to S3 bucket webar-s3-frontend"
 
   - task: AWSCLI@1
     inputs:
@@ -92,9 +92,9 @@ jobs:
       regionName: 'eu-central-1'
       awsCommand: 's3'
       awsSubCommand: 'sync'
-      awsArguments: './frontend/dist s3://webar-s3-frontend2/dist'
+      awsArguments: './frontend/dist s3://webar-s3-frontend/dist'
       failOnStandardError: true
-    displayName: "Upload ./dist to S3 bucket webar-s3-frontend2"
+    displayName: "Upload ./dist to S3 bucket webar-s3-frontend"
 
   - task: AWSCLI@1
     inputs:
@@ -102,9 +102,9 @@ jobs:
       regionName: 'eu-central-1'
       awsCommand: 's3'
       awsSubCommand: 'sync'
-      awsArguments: './frontend/assets s3://webar-s3-frontend2/assets'
+      awsArguments: './frontend/assets s3://webar-s3-frontend/assets'
       failOnStandardError: true
-    displayName: "Upload ./assets to S3 bucket webar-s3-frontend2"
+    displayName: "Upload ./assets to S3 bucket webar-s3-frontend"
 
 - job: BuildandDeployBackend
   steps:
