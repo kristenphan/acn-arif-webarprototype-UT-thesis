@@ -333,7 +333,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Ref CloudFrontDistributionEndpoint
+              - "test origin"
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
