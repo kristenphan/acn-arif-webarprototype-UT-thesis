@@ -7,72 +7,6 @@ Globals:
   Function:
     Timeout: 3
     MemorySize: 128
-
-Parameters:
-  AWSRegionParam:
-    Description: Region in which AWS resources are deployed
-    Type: String
-    Default: eu-central-1
-  SensorDataDDBTablename: 
-    Description: Name of dynamodb table storing sensor data
-    Type: String
-    Default: webar-ddb-sensordata2
-  WateringHistoryDDBTablename:
-    Description: Name of dynamodb table storing watering history
-    Type: String
-    Default: webar-ddb-wateringhistory2
-  SensorDataSelectFunctionName:
-    Description: Name of lambda function querying sensor data from ddb
-    Type: String
-    Default: webar-lambda-sensordataselect2
-  WaterMeSelectFunctionName:
-    Description: Name of lambda function querying watering records from ddb
-    Type: String
-    Default: webar-lambda-watermeselect2
-  WaterMeInsertFunctionName:
-    Description: Name of lambda function inserting a new watering record to ddb
-    Type: String
-    Default: webar-lambda-watermeinsert2
-  SensorDataSelectFunctionRoleName:
-    Description: Name of IAM role attached to lambda function querying sensor data from ddb
-    Type: String
-    Default: webar-role-lambdasensordataselect
-  WaterMeSelectFunctionRoleName:
-    Description: Name of IAM role attached to lambda function querying watering records from ddb
-    Type: String
-    Default: webar-role-lambdawatermeselect
-  WaterMeInsertFunctionRoleName:
-    Description: Name of IAM role attached to lambda function inserting a new watering record to ddb
-    Type: String
-    Default: webar-role-lambdawatermeinsert
-  SensorDataSelectFunctionBasicExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function querying sensor data from ddb
-    Type: String
-    Default: webar-policy-lambdasensordataselectbasicexecution
-  SensorDataSelectFunctionDDBExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function querying sensor data from ddb
-    Type: String
-    Default: webar-policy-lambdasensordataselectddbexecution
-  WaterMeSelectFunctionBasicExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function querying watering records from ddb
-    Type: String
-    Default: webar-policy-lambdawatermeselectbasicexecution
-  WaterMeSelectFunctionDDBExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function querying watering records from ddb
-    Type: String
-    Default: webar-policy-lambdawatermeselectddbexecution
-  WaterMeInsertFunctionBasicExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function inserting a new watering record to ddb
-    Type: String
-    Default: webar-policy-lambdawatermeinsertbasicexecutionpolicy
-  WaterMeInsertFunctionDDBExecutionPolicyName:
-    Description: Name of IAM policy attached to lambda function querying sensor data from ddb
-    Type: String
-    Default: webar-policy-lambdawatermeinsertddbexecution
-  CloudFrontDistributionEndpoint:
-    Description: URL of CloudFront distribution endpoint acting as CDN and serving frontend's static HTML, CSS, and JS
-    Type: String
-    Default: https://d287cl5btunnv2.cloudfront.net
   
 Resources:
   ##########################################################################
@@ -95,7 +29,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      TableName: !Ref SensorDataDDBTablename
+      TableName: webar-ddb-sensordata2
       Tags: 
         - Key: project
           Value: webar
@@ -196,7 +130,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      TableName: !Ref WateringHistoryDDBTablename
+      TableName: webar-ddb-wateringhistory2
       Tags: 
         - Key: project
           Value: webar
@@ -291,13 +225,13 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: !Ref SensorDataSelectFunctionName
+      FunctionName: webar-lambda-sensordataselect3
       Tags:
         project: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref SensorDataDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: eu-central-1
       Role: !GetAtt SensorDataSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -307,7 +241,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Ref CloudFrontDistributionEndpoint
+              - "*"
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -317,13 +251,13 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: !Ref WaterMeSelectFunctionName
+      FunctionName: webar-lambda-watermeselect3
       Tags:
         project: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: eu-central-1
       Role: !GetAtt WaterMeSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -333,7 +267,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Ref CloudFrontDistributionEndpoint
+              - "*"
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
@@ -343,13 +277,13 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: !Ref WaterMeInsertFunctionName
+      FunctionName: webar-lambda-watermeinsert3
       Tags:
         project: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: eu-central-1
       Role: !GetAtt WaterMeInsertFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -359,7 +293,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Ref CloudFrontDistributionEndpoint
+              - "*"
   
   ##########################################################################
   #   IAM                                                                  #
@@ -367,7 +301,7 @@ Resources:
   SensorDataSelectFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Ref SensorDataSelectFunctionRoleName
+      RoleName: webar-role-lambdasensordataselect
       Tags: 
         - Key: "project"
           Value: "webar"
@@ -382,7 +316,7 @@ Resources:
   SensorDataSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref SensorDataSelectFunctionBasicExecutionPolicyName
+      PolicyName: webar-policy-lambdasensordataselectbasicexecution
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -400,7 +334,7 @@ Resources:
   SensorDataSelectFunctionDDBExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref SensorDataSelectFunctionDDBExecutionPolicyName
+      PolicyName: webar-policy-lambdasensordataselectddbexecution
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -413,7 +347,7 @@ Resources:
   WaterMeSelectFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Ref WaterMeSelectFunctionRoleName
+      RoleName: webar-role-lambdawatermeselect
       Tags: 
         - Key: "project"
           Value: "webar"
@@ -428,7 +362,7 @@ Resources:
   WaterMeSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref WaterMeSelectFunctionBasicExecutionPolicyName
+      PolicyName: webar-policy-lambdawatermeselectbasicexecution
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -446,7 +380,7 @@ Resources:
   WaterMeSelectFunctionDDBExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref WaterMeSelectFunctionDDBExecutionPolicyName
+      PolicyName: webar-policy-lambdawatermeselectddbexecution
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -459,7 +393,7 @@ Resources:
   WaterMeInsertFunctionRole:
     Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Ref WaterMeInsertFunctionRoleName
+      RoleName: webar-role-lambdawatermeinsert
       Tags: 
         - Key: "project"
           Value: "webar"
@@ -474,7 +408,7 @@ Resources:
   WaterMeInsertFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref WaterMeInsertFunctionBasicExecutionPolicyName
+      PolicyName: webar-policy-lambdawatermeinsertbasicexecutionpolicy
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -492,7 +426,7 @@ Resources:
   WaterMeInsertFunctionDDBExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: !Ref WaterMeInsertFunctionDDBExecutionPolicyName
+      PolicyName: webar-policy-lambdawatermeinsertddbexecution
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
