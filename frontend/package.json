@@ -1,5 +1,6 @@
 {
   "name": "threejs-frontend",
+  "author": "kristen.phan@accenture.com",
   "scripts": {
     "build": "webpack",
     "start": "webpack serve"
