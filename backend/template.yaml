@@ -9,10 +9,14 @@ Globals:
     MemorySize: 128
 
 Parameters:
-  AWSRegionParam:
+  AWSRegion:
     Description: Region in which AWS resources are deployed
     Type: String
     Default: eu-central-1
+  ResourceTagKey:
+    Description: Key of the key-value tag of a AWS resource
+    Type: String
+    Default: project
 
 Resources:
   ##########################################################################
@@ -37,7 +41,7 @@ Resources:
         WriteCapacityUnits: 1
       TableName: webar-ddb-sensordata2
       Tags: 
-        - Key: project
+        - Key: !Ref ResourceTagKey
           Value: webar
   SensorDataDDBWriteCapacityScalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
@@ -138,7 +142,7 @@ Resources:
         WriteCapacityUnits: 1
       TableName: webar-ddb-wateringhistory2
       Tags: 
-        - Key: project
+        - Key: !Ref ResourceTagKey
           Value: webar
   WateringHistoryDDBWriteCapacityScalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
@@ -233,11 +237,11 @@ Resources:
         - x86_64
       FunctionName: webar-lambda-sensordataselect2
       Tags:
-        project: webar
+        !Ref ResourceTagKey: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref SensorDataDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: !Ref AWSRegion
       Role: !GetAtt SensorDataSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -259,11 +263,11 @@ Resources:
         - x86_64
       FunctionName: webar-lambda-watermeselect2
       Tags:
-        project: webar
+        !Ref ResourceTagKey: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: !Ref AWSRegion
       Role: !GetAtt WaterMeSelectFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -285,11 +289,11 @@ Resources:
         - x86_64
       FunctionName: webar-lambda-watermeinsert2
       Tags:
-        project: webar
+        !Ref ResourceTagKey: webar
       Environment:
         Variables:
           DDBTABLENAME: !Ref WateringHistoryDDB
-          AWSREGION: !Ref AWSRegionParam
+          AWSREGION: !Ref AWSRegion
       Role: !GetAtt WaterMeInsertFunctionRole.Arn
       FunctionUrlConfig:
         AuthType: NONE
@@ -309,7 +313,7 @@ Resources:
     Properties:
       RoleName: webar-role-lambdasensordataselect
       Tags: 
-        - Key: "project"
+        - Key: !Ref ResourceTagKey
           Value: "webar"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -355,7 +359,7 @@ Resources:
     Properties:
       RoleName: webar-role-lambdawatermeselect
       Tags: 
-        - Key: "project"
+        - Key: !Ref ResourceTagKey
           Value: "webar"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -401,7 +405,7 @@ Resources:
     Properties:
       RoleName: webar-role-lambdawatermeinsert
       Tags: 
-        - Key: "project"
+        - Key: !Ref ResourceTagKey
           Value: "webar"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
