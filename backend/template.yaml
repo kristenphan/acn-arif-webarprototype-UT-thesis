@@ -53,6 +53,15 @@ Parameters:
     Description: Name of IAM policy attached to lambda function querying sensor data from ddb
     Type: String
     Default: webar-policy-lambdasensordataselectddbexecution
+  WaterMeSelectFunctionBasicExecutionPolicyName:
+    Description: Name of IAM policy attached to lambda function querying watering records from ddb
+    Type: String
+    Default: webar-policy-lambdawatermeselectbasicexecution
+  WaterMeSelectFunctionDDBExecutionPolicyName:
+    Description: Name of IAM policy attached to lambda function querying watering records from ddb
+    Type: String
+    Default: webar-policy-lambdawatermeselectddbexecution
+
 
 Resources:
   ##########################################################################
@@ -408,7 +417,7 @@ Resources:
   WaterMeSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: webar-policy-watermeselectbasicexecutionpolicy
+      PolicyName: !Ref WaterMeSelectFunctionBasicExecutionPolicyName
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -423,10 +432,10 @@ Resources:
       Roles: 
         - !Ref WaterMeSelectFunctionRole
 
-  WaterMeSelectFunctionQueryDDBPolicy:
+  WaterMeSelectFunctionDDBExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: webar-policy-watermeselectqueryddbpolicy
+      PolicyName: !Ref WaterMeSelectFunctionDDBExecutionPolicyName
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
