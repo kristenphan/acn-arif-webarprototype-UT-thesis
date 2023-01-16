@@ -29,7 +29,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      TableName: webar-ddb-sensordata2
+      TableName: webar-ddb-sensordata
       Tags: 
         - Key: project
           Value: webar
@@ -130,7 +130,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      TableName: webar-ddb-wateringhistory2
+      TableName: webar-ddb-wateringhistory
       Tags: 
         - Key: project
           Value: webar
@@ -225,7 +225,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-sensordataselect3
+      FunctionName: webar-lambda-sensordataselect
       Tags:
         project: webar
       Environment:
@@ -251,7 +251,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-watermeselect3
+      FunctionName: webar-lambda-watermeselect
       Tags:
         project: webar
       Environment:
@@ -277,7 +277,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      FunctionName: webar-lambda-watermeinsert3
+      FunctionName: webar-lambda-watermeinsert
       Tags:
         project: webar
       Environment:
@@ -327,7 +327,7 @@ Resources:
             Action: 
               - "logs:CreateLogStream"
               - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect2:*"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect:*"
       Roles: 
         - !Ref SensorDataSelectFunctionRole
 
@@ -373,7 +373,7 @@ Resources:
             Action: 
               - "logs:CreateLogStream"
               - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect2:*"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect:*"
       Roles: 
         - !Ref WaterMeSelectFunctionRole
 
@@ -419,7 +419,7 @@ Resources:
             Action: 
               - "logs:CreateLogStream"
               - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeinsert2:*"
+            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeinsert:*"
       Roles: 
         - !Ref WaterMeInsertFunctionRole
 
