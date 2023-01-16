@@ -62,9 +62,9 @@ jobs:
       regionName: 'eu-central-1'
       awsCommand: 's3'
       awsSubCommand: 'rm'
-      awsArguments: 's3://webar-s3-frontend2 --recursive'
+      awsArguments: 's3://webar-s3-frontend --recursive'
       failOnStandardError: true
-    displayName: "Emtpy existing webar-s3-frontend2 bucket"
+    displayName: "Emtpy existing webar-s3-frontend bucket"
     
   - task: AWSCLI@1
     inputs:
