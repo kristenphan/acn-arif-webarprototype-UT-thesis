@@ -6,7 +6,7 @@ Parameters:
   FrontendS3BucketName:
     Description: Name of S3 bucket storing frontend's static assets (HTML, CSS, JS)
     Type: String
-    Default: webar-s3-frontend2
+    Default: webar-s3-frontend
   ResourceKey:
     Description: Key of the key-value tag of a AWS resource
     Type: String
@@ -27,6 +27,7 @@ Resources:
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
+      AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
       BucketEncryption:
