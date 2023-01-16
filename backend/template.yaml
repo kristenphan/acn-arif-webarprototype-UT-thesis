@@ -333,7 +333,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - "test origin"
+              - "https://d287cl5btunnv2.cloudfront.net"
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
