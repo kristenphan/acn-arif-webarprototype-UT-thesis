@@ -45,7 +45,15 @@ Parameters:
     Description: Name of IAM role attached to lambda function inserting a new watering record to ddb
     Type: String
     Default: webar-role-lambdawatermeinsert
-  
+  SensorDataSelectFunctionBasicExecutionPolicyName:
+    Description: Name of IAM policy attached to lambda function querying sensor data from ddb
+    Type: String
+    Default: webar-policy-lambdasensordataselectbasicexecution
+  SensorDataSelectFunctionDDBExecutionPolicyName:
+    Description: Name of IAM policy attached to lambda function querying sensor data from ddb
+    Type: String
+    Default: webar-policy-lambdasensordataselectddbexecution
+
 Resources:
   ##########################################################################
   #   DynamoDB                                                             #
@@ -354,7 +362,7 @@ Resources:
   SensorDataSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: webar-policy-sensordataselectbasicexecutionpolicy
+      PolicyName: !Ref SensorDataSelectFunctionBasicExecutionPolicyName
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -369,10 +377,10 @@ Resources:
       Roles: 
         - !Ref SensorDataSelectFunctionRole
 
-  SensorDataSelectFunctionQueryDDBPolicy:
+  SensorDataSelectFunctionDDBExecutionPolicy:
     Type: AWS::IAM::Policy
     Properties: 
-      PolicyName: webar-policy-sensordataselectqueryddbpolicy
+      PolicyName: !Ref SensorDataSelectFunctionDDBExecutionPolicyName
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
