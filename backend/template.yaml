@@ -72,7 +72,6 @@ Parameters:
   CloudFrontDistributionEndpoint:
     Description: URL of CloudFront distribution endpoint acting as CDN and serving frontend's static HTML, CSS, and JS
     Type: String
-    # Default: "*"
     Default: https://d287cl5btunnv2.cloudfront.net
   
 Resources:
