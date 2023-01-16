@@ -28,12 +28,16 @@ Resources:
     Type: AWS::S3::Bucket
     Properties: 
       BucketName: !Ref FRONTENDS3BUCKETNAMEPARAM
-      AccessControl: PublicRead
       Tags: 
         - Key: !Ref RESOURCETAGKEYPARAM
           Value: !Ref RESOURCETAGVALUEPARAM
       WebsiteConfiguration:
         IndexDocument: index.html
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
+            BucketKeyEnabled: true
 
   ##########################################################################
   #   CloudFront CDN                                                       #
