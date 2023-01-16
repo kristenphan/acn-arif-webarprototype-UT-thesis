@@ -241,7 +241,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - dn1fef6vd101y.cloudfront.net
+              - https://dn1fef6vd101y.cloudfront.net
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -267,7 +267,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - dn1fef6vd101y.cloudfront.net
+              - https://dn1fef6vd101y.cloudfront.net
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
@@ -293,7 +293,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - dn1fef6vd101y.cloudfront.net
+              - https://dn1fef6vd101y.cloudfront.net
   
   ##########################################################################
   #   IAM                                                                  #
