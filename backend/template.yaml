@@ -307,7 +307,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - "https://d287cl5btunnv2.cloudfront.net"
+              - !Ref CloudFrontDistributionEndpoint
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -333,7 +333,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - "https://d287cl5btunnv2.cloudfront.net"
+              - !Ref CloudFrontDistributionEndpoint
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
