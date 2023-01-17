@@ -3,17 +3,18 @@ let response;
 const AWSREGION = process.env.AWSREGION;
 const DDBTABLENAME = process.env.DDBTABLENAME;
 
+// Return the latest sensor value and the associated timestamp for a sensor identified by sensor Id 
 export const handler = async (event) => {
 	// Extract params from event
-	const sensorId = JSON.parse(event.body).sensorId;
-	
+	const sensorIdStr = JSON.parse(event.body).sensorId.toString();
+
 	// Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
 	const ddbClient = new DynamoDBClient({region: AWSREGION});
 	
 	const params = {
 		TableName: DDBTABLENAME,
 		ExpressionAttributeValues: {
-			":sensorId": {"N": sensorId},
+			":sensorId": {"N": sensorIdStr},
 		},
 		KeyConditionExpression: "sensorId = :sensorId", // sensorId = partition key
 		ScanIndexForward: false, // timestamp = sort key: False = sort from newest to oldest
