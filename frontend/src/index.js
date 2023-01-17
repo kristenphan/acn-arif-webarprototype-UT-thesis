@@ -5,6 +5,8 @@ import * as THREE from "three";
 import getMoistureData from "./getmoisturedata";
 import transformTimestamp from "./transformtimestamp";
 import getWateringHistory from "./getwateringhistory";
+import * as handpose from "@tensorflow-models/handpose";
+import * as fp from "fingerpose";
 
 //const LambdaFunctionURLSensorDataSelect = "https://7krqpeuuicfgvw2soeojunszlu0aqepm.lambda-url.eu-central-1.on.aws/";
 const LambdaFunctionURLSensorDataSelect = process.env.LAMBDAFUNCTIONURLSENSORDATASELECT;
