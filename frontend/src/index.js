@@ -252,24 +252,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // If hand is detected, estimate the gesture using the first hand detected idx=0
       // using threshold of 7.5 
       if (predictions.length > 0) {
-        // Estimate the gestures of the detected hand with threshold of 7.5 
+        // Estimate the gestures of the detected hand with threshold of 9
         // 10 = highest confidence for an estimated gesture
-        const estimatedGestures = GE.estimate(predictions[0].landmarks, 8)
+        const estimatedGestures = GE.estimate(predictions[0].landmarks, 9)
         // Find the best gesture based on estimated score
         if (estimatedGestures.gestures.length > 0) {
           	const best = estimatedGestures.gestures.sort((g1, g2) => g2.confidence - g1.confidence)[0];
           	// Play the animation according to the detected gesture with fade-in effect
           	if (best.name === 'thumbs_up') {
-            	alert("Recorded thumbs-up: plantId = 1; plantStatus = 'Good'.");
+            	alert("Recorded a new watering record with plant status 'Good'.");
 				setTimeout(() => {
-					console.log("Delayed for 0.5 sec.");
+					console.log(".");
 					}, "500"
 				);
     		}
 			if (best.name === 'thumbs_down') {
-            	alert("Recorded thumbs-down: plantId = 1; plantStatus = 'Not good'.");
+            	alert("Recorded a new watering record with plant status 'Not good'.");
 				setTimeout(() => {
-					console.log("Delayed for 0.5 sec.");
+					console.log(".");
 					}, "500"
 				);
           	}
