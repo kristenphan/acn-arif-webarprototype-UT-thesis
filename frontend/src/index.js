@@ -15,7 +15,6 @@ const LambdaFunctionURLWaterMeSelect = process.env.LAMBDAFUNCTIONURLWATERMESELEC
 const LambdaFunctionURLWaterMeInsert = process.env.LAMBDAFUNCTIONURLWATERMEINSERT; 
 const moistureSensorId = 1;
 const plantId = 1;
-const plantIdNum = 1;
 const LSURL = "https://liquidstudio.nl/";
 
 // Load .js after html doc has loaded
@@ -268,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						const timeEpoch = Math.floor(Date.now() / 1000);
 						const plantStatus = "Good";
 						// Invoke lambda to write a new watering record to database
-						await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantIdNum, timeEpoch, plantStatus);
+						await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantId, timeEpoch, plantStatus);
 						setTimeout(() => {
 							console.log(".");
 							}, "500"
@@ -280,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					const timeEpoch = Math.floor(Date.now() / 1000);
 					const plantStatus = "Not good";
 					// Invoke lambda to write a new watering record to database
-					await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantIdNum, timeEpoch, plantStatus);
+					await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantId, timeEpoch, plantStatus);
 					setTimeout(() => {
 						console.log(".");
 						}, "500"
