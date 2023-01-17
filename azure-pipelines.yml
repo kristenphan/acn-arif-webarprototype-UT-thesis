@@ -38,23 +38,29 @@ jobs:
       workingDirectory: './frontend'
     displayName: "Deploy sam build artifacts to aws using sam template.yaml"
 
-  - task: Npm@1
-    inputs:
-      command: 'install'
-      workingDir: './frontend'
-    displayName: "Install npm modules for threejs frontend"
-
-  - task: Npm@1
-    inputs:
-      command: 'custom'
-      workingDir: './frontend'
-      customCommand: 'run build'
-    displayName: "Run npm run build"
-  
   - task: CmdLine@2
     inputs:
-      script: 'cd ./frontend; ls'
-    displayName: "Run ls"
+      script: |
+        npm i --global yarn
+      displayName: "Install yarn package manager"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        yarn --version
+      displayName: "Confirm yarn installed"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        yarn
+      displayName: "Install dependencies for frontend"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        yarn run build
+      displayName: "Run build"
     
   - task: AWSCLI@1
     inputs:
