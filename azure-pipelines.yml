@@ -61,7 +61,8 @@ jobs:
     inputs:
       script: |
         yarn run build
-      displayName: "Run build"
+      workingDirectory: './frontend'
+    displayName: "Run build"
     
   - task: AWSCLI@1
     inputs:
