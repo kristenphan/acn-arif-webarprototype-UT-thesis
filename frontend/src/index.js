@@ -13,7 +13,7 @@ import insertWateringRecord from "./insertwateringrecord";
 const LambdaFunctionURLSensorDataSelect = process.env.LAMBDAFUNCTIONURLSENSORDATASELECT;
 const LambdaFunctionURLWaterMeSelect = process.env.LAMBDAFUNCTIONURLWATERMESELECT;
 const LambdaFunctionURLWaterMeInsert = process.env.LAMBDAFUNCTIONURLWATERMEINSERT; 
-const moistureSensorId = "1";
+const moistureSensorId = 1;
 const plantId = "1";
 const plantIdNum = 1;
 const LSURL = "https://liquidstudio.nl/";
