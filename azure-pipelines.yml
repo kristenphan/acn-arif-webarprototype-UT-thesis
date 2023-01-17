@@ -42,19 +42,20 @@ jobs:
     inputs:
       script: |
         npm i --global yarn
-      displayName: "Install yarn package manager"
+    displayName: "Install yarn package manager"
 
   - task: CmdLine@2
     inputs:
       script: |
         yarn --version
-      displayName: "Confirm yarn installed"
+    displayName: "Confirm yarn installed"
 
   - task: CmdLine@2
     inputs:
       script: |
         yarn
-      displayName: "Install dependencies for frontend"
+      workingDirectory: './frontend'
+    displayName: "Install dependencies for frontend"
 
   - task: CmdLine@2
     inputs:
