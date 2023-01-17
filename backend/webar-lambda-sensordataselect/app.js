@@ -6,7 +6,7 @@ const DDBTABLENAME = process.env.DDBTABLENAME;
 // Return the latest sensor value and the associated timestamp for a sensor identified by sensor Id 
 export const handler = async (event) => {
 	// Extract params from event
-	const sensorIdStr = JSON.parse(event.body).sensorId.toString();
+	const sensorIdStr = event.queryStringParameters.sensorId;
 
 	// Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
 	const ddbClient = new DynamoDBClient({region: AWSREGION});
