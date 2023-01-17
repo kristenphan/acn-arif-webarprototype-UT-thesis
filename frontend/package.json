@@ -6,7 +6,12 @@
     "start": "webpack serve"
   },
   "dependencies": {
+    "@tensorflow-models/handpose": "^0.0.7",
+    "@tensorflow/tfjs-backend-webgl": "^3.0.0",
+    "@tensorflow/tfjs-converter": "^3.0.0",
+    "@tensorflow/tfjs-core": "^3.0.0",
     "axios": "^1.2.2",
+    "fingerpose": "^0.1.0",
     "three": "^0.136.0"
   },
   "devDependencies": {
