@@ -5,18 +5,17 @@ const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
     // Extract params from event
-    const body = JSON.parse(event.body);
-    const plantIdStr = String(body.plantId);
-
+    const plantIdStr = JSON.parse(event.body).plantId.toString();
+    
     // Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
     const ddbClient = new DynamoDBClient({region: AWSREGION});
     
     const params = {
         TableName: DDBTABLENAME,
-        KeyConditionExpression: "plantId = :plantId",
         ExpressionAttributeValues: {
             ":plantId": {"N": plantIdStr},
         },
+        KeyConditionExpression: "plantId = :plantId",
         ScanIndexForward: false, // Sort by sort key "timestamp": False = newest to oldest
         Limit: 3, // Show 3 items
     };
