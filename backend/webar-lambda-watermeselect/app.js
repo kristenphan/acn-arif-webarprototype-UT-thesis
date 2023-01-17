@@ -5,7 +5,7 @@ const DDBTABLENAME = process.env.DDBTABLENAME;
 
 export const handler = async (event) => {
     // Extract params from event
-    const plantIdStr = JSON.parse(event.body).plantId.toString();
+    const plantIdStr = event.queryStringParameters.plantId;
     
     // Create a DynamoDBClient which auto marshalls JSON-like params to DynamoDB JSON
     const ddbClient = new DynamoDBClient({region: AWSREGION});
