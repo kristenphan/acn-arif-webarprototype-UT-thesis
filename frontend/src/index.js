@@ -2,17 +2,20 @@ import { mockWithImage, mockWithVideo } from "../assets/libs/camera-mock";
 import { loadGLTF } from "../assets/libs/loader";
 import { CSS3DObject} from "three/examples/jsm/renderers/CSS3DRenderer";
 import * as THREE from "three";
+import * as handpose from "@tensorflow-models/handpose";
+import * as fp from "fingerpose";
 import getMoistureData from "./getmoisturedata";
 import transformTimestamp from "./transformtimestamp";
 import getWateringHistory from "./getwateringhistory";
-import * as handpose from "@tensorflow-models/handpose";
-import * as fp from "fingerpose";
+import insertWateringRecord from "./insertwateringrecord";
 
 //const LambdaFunctionURLSensorDataSelect = "https://7krqpeuuicfgvw2soeojunszlu0aqepm.lambda-url.eu-central-1.on.aws/";
 const LambdaFunctionURLSensorDataSelect = process.env.LAMBDAFUNCTIONURLSENSORDATASELECT;
 const LambdaFunctionURLWaterMeSelect = process.env.LAMBDAFUNCTIONURLWATERMESELECT;
+const LambdaFunctionURLWaterMeInsert = process.env.LAMBDAFUNCTIONURLWATERMEINSERT; 
 const moistureSensorId = "1";
 const plantId = "1";
+const plantIdNum = 1;
 const LSURL = "https://liquidstudio.nl/";
 
 // Load .js after html doc has loaded
@@ -257,24 +260,34 @@ document.addEventListener("DOMContentLoaded", () => {
         const estimatedGestures = GE.estimate(predictions[0].landmarks, 9)
         // Find the best gesture based on estimated score
         if (estimatedGestures.gestures.length > 0) {
-          	const best = estimatedGestures.gestures.sort((g1, g2) => g2.confidence - g1.confidence)[0];
-          	// Play the animation according to the detected gesture with fade-in effect
-          	if (best.name === 'thumbs_up') {
-            	alert("Recorded a new watering record with plant status 'Good'.");
-				setTimeout(() => {
-					console.log(".");
-					}, "500"
-				);
-    		}
-			if (best.name === 'thumbs_down') {
-            	alert("Recorded a new watering record with plant status 'Not good'.");
-				setTimeout(() => {
-					console.log(".");
-					}, "500"
-				);
-          	}
-        }
-      }
+					const best = estimatedGestures.gestures.sort((g1, g2) => g2.confidence - g1.confidence)[0];
+					// Play the animation according to the detected gesture with fade-in effect
+					if (best.name === 'thumbs_up') {
+						alert("Recorded a new watering record with plant status 'Good'.");
+						// Obtain epoch time and plant status
+						const timeEpoch = Math.floor(Date.now() / 1000);
+						const plantStatus = "Good";
+						// Invoke lambda to write a new watering record to database
+						await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantIdNum, timeEpoch, plantStatus);
+						setTimeout(() => {
+							console.log(".");
+							}, "500"
+						);
+					}
+				if (best.name === 'thumbs_down') {
+					alert("Recorded a new watering record with plant status 'Not good'.");
+					// Obtain epoch time and plant status
+					const timeEpoch = Math.floor(Date.now() / 1000);
+					const plantStatus = "Not good";
+					// Invoke lambda to write a new watering record to database
+					await insertWateringRecord(LambdaFunctionURLWaterMeInsert, plantIdNum, timeEpoch, plantStatus);
+					setTimeout(() => {
+						console.log(".");
+						}, "500"
+					);
+							}
+					}
+				}
       window.requestAnimationFrame(detect);
     };
     window.requestAnimationFrame(detect);
