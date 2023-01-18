@@ -75,12 +75,9 @@ Resources:
         Origins: 
           - DomainName: !GetAtt FrontendS3Bucket.DomainName
             Id: !GetAtt FrontendS3Bucket.Arn
-            OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccessControl.Id
             S3OriginConfig:
-              OriginAccessIdentity: !Join
-                - ''
-                - - 'origin-access-identity/cloudfront/'
-                  - !Ref FrontendCloudFrontOriginAccesControl.Id
+              OriginAccessIdentity: ''
+            OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccessControl.Id
         DefaultRootObject: "index.html"
         DefaultCacheBehavior:
           ViewerProtocolPolicy: "redirect-to-https"
