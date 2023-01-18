@@ -30,11 +30,16 @@ Resources:
       # AccessControl: PublicRead
       # WebsiteConfiguration:
       #  IndexDocument: index.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: "true"
+        BlockPublicPolicy: "true"
+        IgnorePublicAcls: "true"
+        RestrictPublicBuckets: "true"
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
-              SSEAlgorithm: 'AES256'
-            BucketKeyEnabled: true
+              SSEAlgorithm: "AES256"
+            BucketKeyEnabled: "true"
 
   FrontendS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -52,10 +57,11 @@ Resources:
                 - !Ref FrontendS3Bucket
                 - /*
             #Principal: "*"
-            Principal: !Join
-              - ''
-              - - 'arn:aws:cloudfront::268357442233:distribution/'
-                - !Ref FrontendCloudFrontDistribution
+            Principal: !Join [ "", [ "arn:aws:cloudfront::268357442233:distribution/", !Ref FrontendCloudFrontDistribution ] ]
+            #Principal: !Join
+            #  - ''
+            #  - - 'arn:aws:cloudfront::268357442233:distribution/'
+            #    - !Ref FrontendCloudFrontDistribution
 
   ##########################################################################
   #   CloudFront                                                           #
