@@ -51,12 +51,8 @@ Resources:
               - - 'arn:aws:s3:::'
                 - !Ref FrontendS3Bucket
                 - /*
-            #Principal: !GetAtt FrontendCloudFrontDistribution.Arn
-            Principal: !Join
-              - ''
-              - - 'arn:aws:cloudfront::268357442233:distribution/'
-                - !GetAtt FrontendCloudFrontDistribution.Id
-
+            Principal: !GetAtt FrontendCloudFrontDistribution.Arn
+            
   ##########################################################################
   #   CloudFront                                                           #
   ##########################################################################
