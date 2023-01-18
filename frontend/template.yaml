@@ -28,8 +28,8 @@ Resources:
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
       # AccessControl: PublicRead
-      WebsiteConfiguration:
-        IndexDocument: index.html
+      # WebsiteConfiguration:
+      #  IndexDocument: index.html
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -65,7 +65,7 @@ Resources:
         Origins: 
           - DomainName: !GetAtt FrontendS3Bucket.DomainName
             Id: !GetAtt FrontendS3Bucket.Arn
-            OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccesControl.Id
+            OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccessControl.Id
             S3OriginConfig:
               OriginAccessIdentity: !Join
                 - ''
