@@ -71,6 +71,7 @@ Resources:
                 - ''
                 - - 'origin-access-identity/cloudfront/'
                   - !Ref FrontendCloudFrontOriginAccesControl.Id
+        DefaultRootObject: "index.html"
         DefaultCacheBehavior:
           ViewerProtocolPolicy: "redirect-to-https"
           TargetOriginId: !GetAtt FrontendS3Bucket.Arn
