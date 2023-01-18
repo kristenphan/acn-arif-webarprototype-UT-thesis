@@ -44,11 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		cssAnchor.group.add(dashboardCSS3DObject);
 
 		// Load and position gltf model
-		// plantGLTF.scene.type = GROUP
-		// plantGLTF.scene.children.length = 1
-		// plantGLTF.scene.children[0].visible = true by default
-		const plantGLTF = await loadGLTF("../assets/models/plant/scene.gltf");
-		plantGLTF.scene.position.set(0, -1.2, 0);
+		const plantGLTF = await loadGLTF("../assets/models/succulent/scene.gltf");
+		plantGLTF.scene.position.set(0, -0.85, 0);
 		// Make gltf model invisible until "About Me" button on the Home dashboard is clicked
 		plantGLTF.scene.children[0].visible = false;
 		// Mark GLTF model as clickable and with an URL so that a webpage is opened when users click on the model

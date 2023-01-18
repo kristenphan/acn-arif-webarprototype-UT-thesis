@@ -1,0 +1,11 @@
+Model Information:
+* title:	Succulent Arrangement
+* source:	https://sketchfab.com/3d-models/succulent-arrangement-4748b5fc091b48ea834d37678851a27c
+* author:	Hialda Alpizar (https://sketchfab.com/dahlia3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Succulent Arrangement" (https://sketchfab.com/3d-models/succulent-arrangement-4748b5fc091b48ea834d37678851a27c) by Hialda Alpizar (https://sketchfab.com/dahlia3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
