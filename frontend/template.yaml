@@ -35,7 +35,7 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: 'AES256'
             BucketKeyEnabled: true
-  
+
   FrontendS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -53,7 +53,31 @@ Resources:
                 - /*
             Principal: '*'
 
+  ##########################################################################
+  #   CloudFront                                                           #
+  ##########################################################################
+  FrontendCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig: 
+        Enabled: "true"
+        Origins: 
+          - DomainName: !Select [1, !Split ["//", !GetAtt FrontendS3Bucket.WebsiteURL]]
+            Id: !GetAtt FrontendS3Bucket.WebsiteURL
+            CustomOriginConfig: 
+              OriginProtocolPolicy: "http-only"
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: "redirect-to-https"
+          TargetOriginId: !GetAtt FrontendS3Bucket.WebsiteURL
+          CachePolicyId: "658327ea-f89d-4fab-a63d-7e88639e58f6"
+      Tags: 
+        - Key: !Ref ResourceKey
+          Value: !Ref ResourceValue
+
 Outputs:
   FrontendS3Bucket:
-    Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)"
+    Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)."
     Value: !GetAtt FrontendS3Bucket.WebsiteURL
+  FrontendCloudFrontDistribution:
+    Description: "CloudFront Distribution serving frontend's static assets stored in S3 bucket with S3 bucket's website static hosting URL as custom domain. "
+    Value: !GetAtt FrontendCloudFrontDistribution.DomainName
