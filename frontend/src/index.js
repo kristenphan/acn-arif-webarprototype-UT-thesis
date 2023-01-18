@@ -251,9 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // If hand is detected, estimate the gesture using the first hand detected idx=0
       // using threshold of 7.5 
       if (predictions.length > 0) {
-        // Estimate the gestures of the detected hand with threshold of 9
+        // Estimate the gestures of the detected hand with threshold of 9.5
         // 10 = highest confidence for an estimated gesture
-        const estimatedGestures = GE.estimate(predictions[0].landmarks, 9)
+        const estimatedGestures = GE.estimate(predictions[0].landmarks, 9.5);
         // Find the best gesture based on estimated score
         if (estimatedGestures.gestures.length > 0) {
 					const best = estimatedGestures.gestures.sort((g1, g2) => g2.confidence - g1.confidence)[0];
