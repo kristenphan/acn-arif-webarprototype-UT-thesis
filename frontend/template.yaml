@@ -61,7 +61,7 @@ Resources:
     Properties: 
       DistributionConfig: 
         Enabled: "true"
-        Comment: "CDN distribution serving webar's frontend static assets from S3 bucket"
+        Comment: "Serves webar's frontend static assets from S3 bucket"
         Origins: 
           - DomainName: !Select [1, !Split ["//", !GetAtt FrontendS3Bucket.WebsiteURL]]
             Id: !GetAtt FrontendS3Bucket.WebsiteURL
