@@ -60,8 +60,8 @@ Resources:
               Service: "cloudfront.amazonaws.com"
             Condition:
               StringEquals:
-                #AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
-                AWS:SourceArn: !Sub arn:aws:cloudfront::$268357442233:distribution/${CloudFrontDistribution}
+                #AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendCloudFrontDistribution}
+                AWS:SourceArn: !Sub arn:aws:cloudfront::$268357442233:distribution/${FrontendCloudFrontDistribution}
             #Principal: "arn:aws:cloudfront::268357442233:distribution/E1E08LHBCAPA33"
             #Principal: "*"
             #Principal: !Join [ "", [ "arn:aws:cloudfront::268357442233:distribution/", !Ref FrontendCloudFrontDistribution ] ]
