@@ -56,6 +56,16 @@ Resources:
   ##########################################################################
   #   CloudFront                                                           #
   ##########################################################################
+  FrontendCloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties: 
+      OriginAccessControlConfig: 
+        Description: "OAC of FrontendCloudFrontDistribution for access to S3"
+        Name: "webar-oac-cloudfrontdistribution"
+        OriginAccessControlOriginType: "s3"
+        SigningBehavior: "always"
+        SigningProtocol: "sigv4"
+
   FrontendCloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties: 
@@ -79,16 +89,6 @@ Resources:
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
-  
-  FrontendCloudFrontOriginAccessControl:
-    Type: AWS::CloudFront::OriginAccessControl
-    Properties: 
-      OriginAccessControlConfig: 
-        Description: "OAC of FrontendCloudFrontDistribution for access to S3"
-        Name: "webar-oac-cloudfrontdistribution"
-        OriginAccessControlOriginType: "s3"
-        SigningBehavior: "always"
-        SigningProtocol: "sigv4"
 
 Outputs:
   FrontendS3Bucket:
