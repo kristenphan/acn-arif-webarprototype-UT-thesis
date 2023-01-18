@@ -27,7 +27,7 @@ Resources:
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
-      AccessControl: PublicRead
+      # AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
       BucketEncryption:
@@ -51,7 +51,7 @@ Resources:
               - - 'arn:aws:s3:::'
                 - !Ref FrontendS3Bucket
                 - /*
-            Principal: '*'
+            Principal: !GetAtt FrontendCloudFrontDistribution.Arn
 
   ##########################################################################
   #   CloudFront                                                           #
@@ -61,19 +61,33 @@ Resources:
     Properties: 
       DistributionConfig: 
         Enabled: "true"
-        Comment: "Serves webar's frontend static assets from S3 bucket"
+        Comment: "Serve webar's frontend static assets from S3 bucket"
         Origins: 
-          - DomainName: !Select [1, !Split ["//", !GetAtt FrontendS3Bucket.WebsiteURL]]
-            Id: !GetAtt FrontendS3Bucket.WebsiteURL
-            CustomOriginConfig: 
-              OriginProtocolPolicy: "http-only"
+          - DomainName: !GetAtt FrontendS3Bucket.DomainName
+            Id: !GetAtt FrontendS3Bucket.Arn
+            OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccesControl.Id
+            S3OriginConfig:
+              OriginAccessIdentity: !Join
+                - ''
+                - - 'origin-access-identity/cloudfront/'
+                  - !Ref FrontendCloudFrontOriginAccesControl.Id
         DefaultCacheBehavior:
           ViewerProtocolPolicy: "redirect-to-https"
-          TargetOriginId: !GetAtt FrontendS3Bucket.WebsiteURL
+          TargetOriginId: !GetAtt FrontendS3Bucket.Arn
           CachePolicyId: "658327ea-f89d-4fab-a63d-7e88639e58f6"
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
+  
+  FrontendCloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties: 
+      OriginAccessControlConfig: 
+        Description: "OAC of FrontendCloudFrontDistribution for access to S3"
+        Name: "webar-oac-cloudfrontdistribution"
+        OriginAccessControlOriginType: "s3"
+        SigningBehavior: "always"
+        SigningProtocol: "sigv4"
 
 Outputs:
   FrontendS3Bucket:
