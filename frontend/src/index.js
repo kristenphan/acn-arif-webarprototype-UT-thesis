@@ -9,7 +9,6 @@ import transformTimestamp from "./transformtimestamp";
 import getWateringHistory from "./getwateringhistory";
 import insertWateringRecord from "./insertwateringrecord";
 
-//const LambdaFunctionURLSensorDataSelect = "https://7krqpeuuicfgvw2soeojunszlu0aqepm.lambda-url.eu-central-1.on.aws/";
 const LambdaFunctionURLSensorDataSelect = process.env.LAMBDAFUNCTIONURLSENSORDATASELECT;
 const LambdaFunctionURLWaterMeSelect = process.env.LAMBDAFUNCTIONURLWATERMESELECT;
 const LambdaFunctionURLWaterMeInsert = process.env.LAMBDAFUNCTIONURLWATERMEINSERT; 
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Instantiate MindARThree object which auto instantiates three.js renderder, CSSRenderer, scene, CSSScene, perspective camera
 		const mindarThree = new window.MINDAR.IMAGE.MindARThree({
 			container: document.body, // size of three.js renderer <canvas>
-			imageTargetSrc: "../assets/targets/acn-2.mind",
+			imageTargetSrc: "../assets/targets/acn-3.mind",
 		});
 		const {renderer, cssRenderer, scene, cssScene, camera} = mindarThree;
 		// Add light to scene to "light up" GLTF model. Otherwise, model will be completely dark
