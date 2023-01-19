@@ -453,29 +453,29 @@ Resources:
       Roles: 
         - !Ref WaterMeInsertFunctionRole
 
-    SensorDataIoTTopicRuleRole:
-      Type: AWS::IAM::Role
-      Properties: 
-        RoleName: webar-role-sensordataiottopicrule
-        Description: Allow IoT Topic Rule to write sensor data to DDB
-        AssumeRolePolicyDocument:
+  SensorDataIoTTopicRuleRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: webar-role-sensordataiottopicrule
+      Description: Allow IoT Topic Rule to write sensor data to DDB
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: iot.amazonaws.com
+          Action: sts:AssumeRole
+      Policies: 
+      - PolicyName: IoTDynamoDBTablePutAccessPolicy
+        PolicyDocument:
           Version: "2012-10-17"
           Statement:
           - Effect: Allow
-            Principal:
-              Service: iot.amazonaws.com
-            Action: sts:AssumeRole
-        Policies: 
-        - PolicyName: IoTDynamoDBTablePutAccessPolicy
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-            - Effect: Allow
-              Action: dynamodb:PutItem
-              Resource: !GetAtt SensorDataDDB.Arn
-        Tags: 
-        - Key: project
-          Value: webar
+            Action: dynamodb:PutItem
+            Resource: !GetAtt SensorDataDDB.Arn
+      Tags: 
+      - Key: project
+        Value: webar
 
 
 Outputs:
