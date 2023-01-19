@@ -306,35 +306,13 @@ Resources:
         - Key: "project"
           Value: "webar"
       TopicRulePayload: 
-          Actions: 
-            - DynamoDBv2:
-                PutItem: 
-                  TableName: !Ref SensorDataDDB
-                RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
-          Description: "Write sensor data ingested from sensor to ddb"
-          Sql: SELECT * FROM "webar-iottopic-sensordata"
-  
-  SensorDataIoTTopicRuleRole:
-    Type: AWS::IAM::Role
-    Properties: 
-      RoleName: "webar-role-sensordataiottopicrule"
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - "iot.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-      Description: "Allow IoT Topic Rule to write to DDB"
-      Policies: 
-        - Effect: Allow
-          Action: "dynamodb:PutItem"
-          Resource: !GetAtt SensorDataDDB.Arn
-      Tags: 
-        - Key: "project"
-          Value: "webar"
+        Actions: 
+        - DynamoDBv2:
+            PutItem: 
+              TableName: !Ref SensorDataDDB
+            RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
+        Description: "Write sensor data ingested from sensor to ddb"
+        Sql: SELECT * FROM "webar-iottopic-sensordata"
 
 
   ##########################################################################
@@ -478,16 +456,42 @@ Resources:
       Roles: 
         - !Ref WaterMeInsertFunctionRole
 
+    SensorDataIoTTopicRuleRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: "webar-role-sensordataiottopicrule"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - iot.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: Allow IoT Topic Rule to write to DDB
+      Policies: 
+        - Effect: Allow
+          Action: dynamodb:PutItem
+          Resource: !GetAtt SensorDataDDB.Arn
+      Tags: 
+        - Key: project
+          Value: webar
+
+
 Outputs:
   SensorDataSelectFunction:
-    Description: "Query sensor data from ddb"
+    Description: Query sensor data from ddb
     Value: !GetAtt SensorDataSelectFunction.Arn
   WaterMeSelectFunction:
-    Description: "Query watering history from ddb"
+    Description: Query watering history from ddb
     Value: !GetAtt WaterMeSelectFunction.Arn
   WaterMeInsertFunction:
-    Description: "Write watering record to ddb"
+    Description: Write watering record to ddb
     Value: !GetAtt WaterMeInsertFunction.Arn
   SensorDataDDB:
-    Description: "Dynamodb table storing sensor data"
+    Description: Dynamodb table storing sensor data
     Value: !GetAtt SensorDataDDB.Arn
+  SensorDataIoTTopicRule:
+    Description: IoT Topic Rule to write sensor data from MQTT message queue to DDB
+    Value: !GetAtt SensorDataIoTTopicRule.Arn
