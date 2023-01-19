@@ -1,8 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Deploy the backend services of WebAR prototype using SAM template.yaml
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+  Deploy the backend of WebAR prototype using SAM template.yaml
 Globals:
   Function:
     Timeout: 3
@@ -16,23 +15,23 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties: 
       AttributeDefinitions: 
-        - AttributeName: sensorId
-          AttributeType: N
-        - AttributeName: timeEpoch
-          AttributeType: N
+      - AttributeName: sensorId
+        AttributeType: N
+      - AttributeName: timeEpoch
+        AttributeType: N
       KeySchema:
-        - AttributeName: sensorId
-          KeyType: HASH
-        - AttributeName: timeEpoch
-          KeyType: RANGE
+      - AttributeName: sensorId
+        KeyType: HASH
+      - AttributeName: timeEpoch
+        KeyType: RANGE
       BillingMode: PROVISIONED
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       TableName: webar-ddb-sensordata
       Tags: 
-        - Key: project
-          Value: webar
+      - Key: project
+        Value: webar
   SensorDataDDBWriteCapacityScalableTarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
@@ -49,24 +48,21 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: 2012-10-17
         Statement:
-          -
-            Effect: "Allow"
-            Principal:
-              Service:
-                - application-autoscaling.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      Path: "/"
+        - Effect: Allow
+          Principal:
+            Service:
+              - application-autoscaling.amazonaws.com
+          Action:
+            - sts:AssumeRole
+      Path: /
       Policies:
-        -
-          PolicyName: "root"
+        - PolicyName: root
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: 2012-10-17
             Statement:
-              -
-                Effect: "Allow"
+              - Effect: "Allow"
                 Action:
                   - "dynamodb:DescribeTable"
                   - "dynamodb:UpdateTable"
@@ -214,6 +210,7 @@ Resources:
         PredefinedMetricSpecification:
           PredefinedMetricType: DynamoDBReadCapacityUtilization
 
+
   ##########################################################################
   #   Lambda                                                               #
   ##########################################################################
@@ -294,6 +291,7 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d2wqnsc2nufco.cloudfront.net
+
 
   ##########################################################################
   #   IoT                                                                  #
@@ -434,13 +432,13 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
           - Effect: Allow
             Action: 
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeinsert:*"
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeinsert:*
       Roles: 
         - !Ref WaterMeInsertFunctionRole
 
@@ -452,7 +450,7 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "dynamodb:PutItem"
+            Action: dynamodb:PutItem
             Resource: !GetAtt WateringHistoryDDB.Arn
       Roles: 
         - !Ref WaterMeInsertFunctionRole
@@ -460,24 +458,26 @@ Resources:
     SensorDataIoTTopicRuleRole:
     Type: AWS::IAM::Role
     Properties: 
-      RoleName: "webar-role-sensordataiottopicrule"
+      RoleName: webar-role-sensordataiottopicrule
+      Description: Allow IoT Topic Rule to write sensor data to DDB
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - iot.amazonaws.com
-            Action:
-              - sts:AssumeRole
-      Description: Allow IoT Topic Rule to write to DDB
-      Policies: 
         - Effect: Allow
-          Action: dynamodb:PutItem
-          Resource: !GetAtt SensorDataDDB.Arn
+          Principal:
+            Service: iot.amazonaws.com
+          Action: sts:AssumeRole
+      Policies: 
+      - PolicyName: IoTDynamoDBTablePutAccessPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: dynamodb:PutItem
+            Resource: !GetAtt SensorDataDDB.Arn
       Tags: 
-        - Key: project
-          Value: webar
+      - Key: project
+        Value: webar
 
 
 Outputs:
