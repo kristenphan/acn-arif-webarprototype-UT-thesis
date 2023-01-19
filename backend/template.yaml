@@ -82,7 +82,7 @@ Resources:
         AuthType: NONE
         Cors: 
             AllowMethods: 
-              - POST
+              - GET
             AllowHeaders:
               - content-type
             AllowOrigins: 
@@ -108,7 +108,7 @@ Resources:
         AuthType: NONE
         Cors: 
             AllowMethods: 
-              - POST
+              - GET
             AllowHeaders:
               - content-type
             AllowOrigins: 
