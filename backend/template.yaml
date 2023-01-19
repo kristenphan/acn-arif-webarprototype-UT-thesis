@@ -294,7 +294,49 @@ Resources:
               - content-type
             AllowOrigins: 
               - https://d2wqnsc2nufco.cloudfront.net
+
+  ##########################################################################
+  #   IoT                                                                  #
+  ##########################################################################
+  SensorDataIoTTopicRule:
+    Type: AWS::IoT::TopicRule
+    Properties: 
+      RuleName: "webar-iottopicrule-writesensordatatoddb"
+      Tags: 
+        - Key: "project"
+          Value: "webar"
+      TopicRulePayload: 
+          Actions: 
+            - DynamoDBv2:
+                PutItem: 
+                  TableName: !Ref SensorDataDDB
+                RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
+          Description: "Write sensor data ingested from sensor to ddb"
+          Sql: SELECT * FROM "webar-iottopic-sensordata"
   
+  SensorDataIoTTopicRuleRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: "webar-role-sensordataiottopicrule"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "iot.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Description: "Allow IoT Topic Rule to write to DDB"
+      Policies: 
+        - Effect: Allow
+          Action: "dynamodb:PutItem"
+          Resource: !GetAtt SensorDataDDB.Arn
+      Tags: 
+        - Key: "project"
+          Value: "webar"
+
+
   ##########################################################################
   #   IAM                                                                  #
   ##########################################################################
