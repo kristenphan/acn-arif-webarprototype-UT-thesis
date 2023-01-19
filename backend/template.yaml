@@ -153,7 +153,7 @@ Resources:
             Service:
               - application-autoscaling.amazonaws.com
           Action:
-            - "sts:AssumeRole"
+            - sts:AssumeRole
       Path: /
       Policies:
       - PolicyName: root
@@ -362,7 +362,7 @@ Resources:
         - !Ref SensorDataSelectFunctionRole
 
   WaterMeSelectFunctionRole:
-    Type: "AWS::IAM::Role"
+    Type: AWS::IAM::Role
     Properties:
       RoleName: webar-role-lambdawatermeselect
       Tags: 
@@ -491,6 +491,9 @@ Outputs:
   SensorDataDDB:
     Description: Dynamodb table storing sensor data
     Value: !GetAtt SensorDataDDB.Arn
+  WateringHistoryDDB:
+    Description: Dynamodb table storing watering history
+    Value: !GetAtt WateringHistoryDDB.Arn
   SensorDataIoTTopicRule:
     Description: IoT Topic Rule to write sensor data from MQTT message queue to DDB
     Value: !GetAtt SensorDataIoTTopicRule.Arn
