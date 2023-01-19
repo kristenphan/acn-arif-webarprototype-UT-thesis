@@ -29,6 +29,9 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       TableName: webar-ddb-sensordata
+      TimeToLiveSpecification:
+        AttributeName: TTL
+        Enabled: true
       Tags: 
       - Key: project
         Value: webar
@@ -309,7 +312,8 @@ Resources:
             RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
         Description: Write sensor data ingested from sensor to ddb
         RuleDisabled: false
-        Sql: SELECT *, timeEpoch + 30*24*60*60 as TTL FROM "webar-iottopic-sensordata"
+        #Sql: SELECT *, timeEpoch + 30*24*60*60 as TTL FROM "webar-iottopic-sensordata"
+        Sql: SELECT *, timeEpoch + 60 as TTL FROM "webar-iottopic-sensordata"
 
 
   ##########################################################################
