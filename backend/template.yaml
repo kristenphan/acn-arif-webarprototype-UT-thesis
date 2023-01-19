@@ -48,7 +48,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: 2012-10-17
+        Version: "2012-10-17"
         Statement:
         - Effect: Allow
           Principal:
@@ -60,17 +60,17 @@ Resources:
       Policies:
         - PolicyName: root
           PolicyDocument:
-            Version: 2012-10-17
+            Version: "2012-10-17"
             Statement:
-              - Effect: "Allow"
+              - Effect: Allow
                 Action:
-                  - "dynamodb:DescribeTable"
-                  - "dynamodb:UpdateTable"
-                  - "cloudwatch:PutMetricAlarm"
-                  - "cloudwatch:DescribeAlarms"
-                  - "cloudwatch:GetMetricStatistics"
-                  - "cloudwatch:SetAlarmState"
-                  - "cloudwatch:DeleteAlarms"
+                  - dynamodb:DescribeTable
+                  - dynamodb:UpdateTable
+                  - cloudwatch:PutMetricAlarm
+                  - cloudwatch:DescribeAlarms
+                  - cloudwatch:GetMetricStatistics
+                  - cloudwatch:SetAlarmState
+                  - cloudwatch:DeleteAlarms
                 Resource: "*"
   SensorDataDDBWriteScalingPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
@@ -148,31 +148,29 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
-            Effect: "Allow"
-            Principal:
-              Service:
-                - application-autoscaling.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      Path: "/"
+        - Effect: Allow
+          Principal:
+            Service:
+              - application-autoscaling.amazonaws.com
+          Action:
+            - "sts:AssumeRole"
+      Path: /
       Policies:
-        -
-          PolicyName: "root"
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              -
-                Effect: "Allow"
-                Action:
-                  - "dynamodb:DescribeTable"
-                  - "dynamodb:UpdateTable"
-                  - "cloudwatch:PutMetricAlarm"
-                  - "cloudwatch:DescribeAlarms"
-                  - "cloudwatch:GetMetricStatistics"
-                  - "cloudwatch:SetAlarmState"
-                  - "cloudwatch:DeleteAlarms"
-                Resource: "*"
+      - PolicyName: root
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: Allow
+              Action:
+                - dynamodb:DescribeTable
+                - dynamodb:UpdateTable
+                - cloudwatch:PutMetricAlarm
+                - cloudwatch:DescribeAlarms
+                - cloudwatch:GetMetricStatistics
+                - cloudwatch:SetAlarmState
+                - cloudwatch:DeleteAlarms
+              Resource: "*"
   WateringHistoryDDBWriteScalingPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
@@ -299,38 +297,38 @@ Resources:
   SensorDataIoTTopicRule:
     Type: AWS::IoT::TopicRule
     Properties: 
-      RuleName: "webar-iottopicrule-writesensordatatoddb"
+      RuleName: webar-iottopicrule-writesensordatatoddb
       Tags: 
-        - Key: "project"
-          Value: "webar"
+        - Key: project
+          Value: webar
       TopicRulePayload:
         Actions:
         - DynamoDBv2:
             PutItem:
               TableName: !Ref SensorDataDDB
             RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
-        Description: "Write sensor data ingested from sensor to ddb"
+        Description: Write sensor data ingested from sensor to ddb
         RuleDisabled: false
-        Sql: SELECT * FROM "webar-iottopic-sensordata"
+        Sql: SELECT * FROM "webar-iottopic-sensordata
 
 
   ##########################################################################
   #   IAM                                                                  #
   ##########################################################################
   SensorDataSelectFunctionRole:
-    Type: "AWS::IAM::Role"
+    Type: AWS::IAM::Role
     Properties:
       RoleName: webar-role-lambdasensordataselect
       Tags: 
-        - Key: "project"
-          Value: "webar"
+      - Key: project
+        Value: webar
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Principal:
-              Service: "lambda.amazonaws.com"
-            Effect: Allow
-            Action: "sts:AssumeRole"
+        - Principal:
+            Service: lambda.amazonaws.com
+          Effect: Allow
+          Action: sts:AssumeRole
 
   SensorDataSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
@@ -340,13 +338,13 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
           - Effect: Allow
             Action: 
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect:*"
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect:*
       Roles: 
         - !Ref SensorDataSelectFunctionRole
 
@@ -358,7 +356,7 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "dynamodb:Query"
+            Action: dynamodb:Query
             Resource: !GetAtt SensorDataDDB.Arn
       Roles: 
         - !Ref SensorDataSelectFunctionRole
@@ -368,15 +366,15 @@ Resources:
     Properties:
       RoleName: webar-role-lambdawatermeselect
       Tags: 
-        - Key: "project"
-          Value: "webar"
+        - Key: project
+          Value: webar
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Principal:
-              Service: "lambda.amazonaws.com"
+              Service: lambda.amazonaws.com
             Effect: Allow
-            Action: "sts:AssumeRole"
+            Action: sts:AssumeRole
 
   WaterMeSelectFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
@@ -386,13 +384,13 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:*"
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
           - Effect: Allow
             Action: 
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: "arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect:*"
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect:*
       Roles: 
         - !Ref WaterMeSelectFunctionRole
 
@@ -404,25 +402,25 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: "dynamodb:Query"
+            Action: dynamodb:Query
             Resource: !GetAtt WateringHistoryDDB.Arn
       Roles: 
         - !Ref WaterMeSelectFunctionRole
   
   WaterMeInsertFunctionRole:
-    Type: "AWS::IAM::Role"
+    Type: AWS::IAM::Role
     Properties:
       RoleName: webar-role-lambdawatermeinsert
       Tags: 
-        - Key: "project"
-          Value: "webar"
+        - Key: project
+          Value: webar
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Principal:
-              Service: "lambda.amazonaws.com"
+              Service: lambda.amazonaws.com
             Effect: Allow
-            Action: "sts:AssumeRole"
+            Action: sts:AssumeRole
 
   WaterMeInsertFunctionBasicExecutionPolicy:
     Type: AWS::IAM::Policy
@@ -470,7 +468,7 @@ Resources:
       Policies: 
       - PolicyName: IoTDynamoDBTablePutAccessPolicy
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
           - Effect: Allow
             Action: dynamodb:PutItem
