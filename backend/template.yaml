@@ -297,7 +297,7 @@ Resources:
   SensorDataIoTTopicRule:
     Type: AWS::IoT::TopicRule
     Properties: 
-      RuleName: webar-iottopicrule-writesensordatatoddb
+      RuleName: webar_iottopicrule_writesensordatatoddb
       Tags: 
         - Key: project
           Value: webar
