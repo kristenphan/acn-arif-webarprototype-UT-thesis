@@ -27,9 +27,6 @@ Resources:
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
-      # AccessControl: PublicRead
-      # WebsiteConfiguration:
-      #  IndexDocument: index.html
       PublicAccessBlockConfiguration:
         BlockPublicAcls: "true"
         BlockPublicPolicy: "true"
@@ -60,7 +57,6 @@ Resources:
               Service: "cloudfront.amazonaws.com"
             Condition:
               StringEquals:
-                #AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendCloudFrontDistribution}
                 AWS:SourceArn: !Sub arn:aws:cloudfront::268357442233:distribution/${FrontendCloudFrontDistribution}
             
   ##########################################################################
