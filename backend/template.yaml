@@ -305,13 +305,14 @@ Resources:
       Tags: 
         - Key: "project"
           Value: "webar"
-      TopicRulePayload: 
-        Actions: 
+      TopicRulePayload:
+        Actions:
         - DynamoDBv2:
-            PutItem: 
+            PutItem:
               TableName: !Ref SensorDataDDB
             RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
         Description: "Write sensor data ingested from sensor to ddb"
+        RuleDisabled: false
         Sql: SELECT * FROM "webar-iottopic-sensordata"
 
 
