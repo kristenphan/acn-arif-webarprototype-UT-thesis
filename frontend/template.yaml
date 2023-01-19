@@ -28,15 +28,15 @@ Resources:
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: "true"
-        BlockPublicPolicy: "true"
-        IgnorePublicAcls: "true"
-        RestrictPublicBuckets: "true"
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
-              SSEAlgorithm: "AES256"
-            BucketKeyEnabled: "true"
+              SSEAlgorithm: AES256
+            BucketKeyEnabled: true
 
   FrontendS3BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -45,8 +45,7 @@ Resources:
       PolicyDocument:
         Version: 2012-10-17
         Statement:
-          - Action:
-              - 's3:GetObject'
+          - Action: s3:GetObject
             Effect: Allow
             Resource: !Join
               - ''
@@ -54,7 +53,7 @@ Resources:
                 - !Ref FrontendS3Bucket
                 - /*
             Principal:
-              Service: "cloudfront.amazonaws.com"
+              Service: cloudfront.amazonaws.com
             Condition:
               StringEquals:
                 AWS:SourceArn: !Sub arn:aws:cloudfront::268357442233:distribution/${FrontendCloudFrontDistribution}
@@ -66,8 +65,8 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties: 
       DistributionConfig: 
-        Enabled: "true"
-        Comment: "Serve webar's frontend static assets from S3 bucket"
+        Enabled: true
+        Comment: Serve webar's frontend static assets from S3 bucket
         Origins: 
           - DomainName: !GetAtt FrontendS3Bucket.DomainName
             Id: !GetAtt FrontendS3Bucket.Arn
@@ -76,9 +75,9 @@ Resources:
             OriginAccessControlId: !GetAtt FrontendCloudFrontOriginAccessControl.Id
         DefaultRootObject: "index.html"
         DefaultCacheBehavior:
-          ViewerProtocolPolicy: "redirect-to-https"
+          ViewerProtocolPolicy: redirect-to-https
           TargetOriginId: !GetAtt FrontendS3Bucket.Arn
-          CachePolicyId: "658327ea-f89d-4fab-a63d-7e88639e58f6"
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
       Tags: 
         - Key: !Ref ResourceKey
           Value: !Ref ResourceValue
@@ -87,16 +86,16 @@ Resources:
     Type: AWS::CloudFront::OriginAccessControl
     Properties: 
       OriginAccessControlConfig: 
-        Description: "OAC of FrontendCloudFrontDistribution for access to S3"
+        Description: OAC of FrontendCloudFrontDistribution for access to S3
         Name: "webar-oac-cloudfrontdistribution"
-        OriginAccessControlOriginType: "s3"
-        SigningBehavior: "always"
-        SigningProtocol: "sigv4"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
 
 Outputs:
   FrontendS3Bucket:
-    Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)."
+    Description: S3 bucket storing frontend's static asssets (HTML, CSS, JS)
     Value: !GetAtt FrontendS3Bucket.WebsiteURL
   FrontendCloudFrontDistribution:
-    Description: "CloudFront Distribution serving frontend's static assets stored in S3 bucket with S3 bucket's website static hosting URL as custom domain. "
+    Description: CloudFront Distribution serving frontend's static assets stored in S3 bucket with S3 bucket's website static hosting URL as custom domain
     Value: !GetAtt FrontendCloudFrontDistribution.DomainName
