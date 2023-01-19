@@ -30,7 +30,7 @@ Resources:
         WriteCapacityUnits: 1
       TableName: webar-ddb-sensordata
       TimeToLiveSpecification:
-        AttributeName: TTL
+        AttributeName: timeToLive
         Enabled: true
       Tags: 
       - Key: project
