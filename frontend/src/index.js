@@ -21,8 +21,7 @@ const LSURL = "https://liquidstudio.nl/";
 document.addEventListener("DOMContentLoaded", () => {
   const start = async() => {
 		// Use mock webcam for testing: mockWithVideo is more stable
-		/* mockWithImage("../assets/mock-videos/kp-horizontal.png"); */
-		/* mockWithVideo("../assets/mock-videos/acn-horizontal.mp4"); */
+		/* mockWithImage("../assets/mock-videos/ls-horizontal.png"); */
 		
 		// Instantiate MindARThree object which auto instantiates three.js renderder, CSSRenderer, scene, CSSScene, perspective camera
 		const mindarThree = new window.MINDAR.IMAGE.MindARThree({
