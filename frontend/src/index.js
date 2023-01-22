@@ -40,17 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		const cssAnchor = mindarThree.addCSSAnchor(0);
 		cssAnchor.group.add(dashboardCSS3DObject);
 
-		// Load and position gltf model
-		const plantGLTF = await loadGLTF("../assets/models/succulent/scene.gltf");
-		plantGLTF.scene.position.set(0, -0.85, 0);
-		// Make gltf model invisible until "About Me" button on the Home dashboard is clicked
-		plantGLTF.scene.children[0].visible = false;
-		// Mark GLTF model as clickable and with an URL so that a webpage is opened when users click on the model
-		plantGLTF.scene.userData.clickable = true;
-		plantGLTF.scene.userData.URL = LSURL;
-		// Add a MindAr anchor for the first image target idx=0 and add gltf to anchor
-		const anchor = mindarThree.addAnchor(0);
-		anchor.group.add(plantGLTF.scene); // causing error
+		// // Load and position gltf model
+		// const plantGLTF = await loadGLTF("../assets/models/succulent/scene.gltf");
+		// plantGLTF.scene.position.set(0, -0.85, 0);
+		// // Make gltf model invisible until "About Me" button on the Home dashboard is clicked
+		// plantGLTF.scene.children[0].visible = false;
+		// // Mark GLTF model as clickable and with an URL so that a webpage is opened when users click on the model
+		// plantGLTF.scene.userData.clickable = true;
+		// plantGLTF.scene.userData.URL = LSURL;
+		// // Add a MindAr anchor for the first image target idx=0 and add gltf to anchor
+		// const anchor = mindarThree.addAnchor(0);
+		// anchor.group.add(plantGLTF.scene); // causing error
 
 		// Add event listeners for dashboard-home-button
 		document.getElementById("home-waterme-button").addEventListener("click", () => {
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			document.getElementById("dashboard-home").classList.add("hidden");
 			document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
 			// Render gltf model
-			plantGLTF.scene.children[0].visible = true;
+			// plantGLTF.scene.children[0].visible = true;
 		});
 
 		document.getElementById("home-getupdates-button").addEventListener("click", async () => {
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Update dashboard content
 			document.getElementById("dashboard-home").classList.remove("hidden");
 			document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
-			plantGLTF.scene.children[0].visible = false;
+			// plantGLTF.scene.children[0].visible = false;
 		});
 
 		// Go to About Me page 2 when "Next" button on About Me page 1 is clicked
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Update dashboard content
 			document.getElementById("dashboard-aboutme-page2").classList.remove("hidden");
 			document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
-			plantGLTF.scene.children[0].visible = false;
+			// plantGLTF.scene.children[0].visible = false;
 		});
 
 		// Go to About Me page 1 when "Back" button on About Me page 1 is clicked
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Update dashboard content
 			document.getElementById("dashboard-aboutme-page2").classList.add("hidden");
 			document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
-			plantGLTF.scene.children[0].visible = true;
+			// plantGLTF.scene.children[0].visible = true;
 		});
 
 		// Return to Home page when "Return" button on About Me page 2 is clicked
@@ -168,27 +168,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// Use raycasting to check if GLTF model is clicked. If yes, open a webpage from a hyperlink
-		document.body.addEventListener("click", (e) => {
-			// Calculate and normalize the x- and y-coord of the click event on html document body i.e., the three.js renderer canvas
-			const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-			const mouseY = -1 * ((e.clientY / window.innerHeight) *2 - 1);
-      		const mouse = new THREE.Vector2(mouseX, mouseY);
-			// Cast a virtual ray from camera to click event coords and check if this ray intersects with the plant GLTF model
-			const raycaster = new THREE.Raycaster();
-			raycaster.setFromCamera(mouse, camera);
-			const intersects = raycaster.intersectObjects(scene.children, true);
-			if (intersects.length > 0) {
-				let o = intersects[0].object;
-				while (o.parent && !o.userData.clickable) {
-					o = o.parent;
-				}
-				if (o.userData.clickable) {
-					if (o === plantGLTF.scene) {
-						window.open(o.userData.URL);
-					}
-				}
-			}
-		});
+		// document.body.addEventListener("click", (e) => {
+		// 	// Calculate and normalize the x- and y-coord of the click event on html document body i.e., the three.js renderer canvas
+		// 	const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+		// 	const mouseY = -1 * ((e.clientY / window.innerHeight) *2 - 1);
+    //   		const mouse = new THREE.Vector2(mouseX, mouseY);
+		// 	// Cast a virtual ray from camera to click event coords and check if this ray intersects with the plant GLTF model
+		// 	const raycaster = new THREE.Raycaster();
+		// 	raycaster.setFromCamera(mouse, camera);
+		// 	const intersects = raycaster.intersectObjects(scene.children, true);
+		// 	if (intersects.length > 0) {
+		// 		let o = intersects[0].object;
+		// 		while (o.parent && !o.userData.clickable) {
+		// 			o = o.parent;
+		// 		}
+		// 		if (o.userData.clickable) {
+		// 			if (o === plantGLTF.scene) {
+		// 				window.open(o.userData.URL);
+		// 			}
+		// 		}
+		// 	}
+		// });
 
 		// Load handpose tensowflow model
 		const model = await handpose.load();
@@ -218,9 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			// so that dashboard always face towards camera
 			dashboardCSS3DObject.lookAt(camera.position);
 
-			// Rotate gltf model continuously around y-axis
-			const delta = clock.getDelta(); // = time in secs since clock.getDelta() was last called
-			plantGLTF.scene.rotation.set(0, plantGLTF.scene.rotation.y + delta/2, 0);
+			// // Rotate gltf model continuously around y-axis
+			// const delta = clock.getDelta(); // = time in secs since clock.getDelta() was last called
+			// plantGLTF.scene.rotation.set(0, plantGLTF.scene.rotation.y + delta/2, 0);
 
 			// Re-render scene and cssScene
 			renderer.render(scene, camera);
