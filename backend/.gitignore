@@ -3,10 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=osx,node,linux,windows,sam
 
 # Ignore IoT sensor device certificate
-backend/arduino-esp32/secrets.h
-
-# Sam build artifacts
-.aws-build
+/arduino-esp32/secrets.h
 
 ### Linux ###
 *~

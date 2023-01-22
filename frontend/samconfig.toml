@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "webar-cfnstack"
+stack_name = "webar-cfnstack-frontend"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-s901cimwdr7j"
-s3_prefix = "webar-cfnstack"
+s3_prefix = "webar-stack-frontend"
 region = "eu-central-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_NAMED_IAM"

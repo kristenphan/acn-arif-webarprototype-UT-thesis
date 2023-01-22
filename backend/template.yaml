@@ -1,0 +1,516 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Deploy the backend of WebAR prototype using SAM template.yaml
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+  
+Resources:
+  ##########################################################################
+  #   DynamoDB                                                             #
+  ##########################################################################
+  SensorDataDDB:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+      - AttributeName: sensorId
+        AttributeType: N
+      - AttributeName: timeEpoch
+        AttributeType: N
+      KeySchema:
+      - AttributeName: sensorId
+        KeyType: HASH
+      - AttributeName: timeEpoch
+        KeyType: RANGE
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      TableName: webar-ddb-sensordata
+      TimeToLiveSpecification:
+        AttributeName: timeToLive
+        Enabled: true
+      Tags: 
+      - Key: project
+        Value: webar
+
+  WateringHistoryDDB:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: plantId
+          AttributeType: N
+        - AttributeName: timeEpoch
+          AttributeType: N
+      KeySchema:
+        - AttributeName: plantId
+          KeyType: HASH
+        - AttributeName: timeEpoch
+          KeyType: RANGE
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      TableName: webar-ddb-wateringhistory
+      Tags: 
+        - Key: project
+          Value: webar
+
+
+  ##########################################################################
+  #   Lambda                                                               #
+  ##########################################################################
+  SensorDataSelectFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: webar-lambda-sensordataselect/
+      Handler: app.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      FunctionName: webar-lambda-sensordataselect
+      Tags:
+        project: webar
+      Environment:
+        Variables:
+          DDBTABLENAME: !Ref SensorDataDDB
+          AWSREGION: eu-central-1
+      Role: !GetAtt SensorDataSelectFunctionRole.Arn
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors: 
+            AllowMethods: 
+              - GET
+            AllowHeaders:
+              - content-type
+            AllowOrigins: 
+              - https://dki4kef2jvmhm.cloudfront.net
+
+  WaterMeSelectFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: webar-lambda-watermeselect/
+      Handler: app.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      FunctionName: webar-lambda-watermeselect
+      Tags:
+        project: webar
+      Environment:
+        Variables:
+          DDBTABLENAME: !Ref WateringHistoryDDB
+          AWSREGION: eu-central-1
+      Role: !GetAtt WaterMeSelectFunctionRole.Arn
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors: 
+            AllowMethods: 
+              - GET
+            AllowHeaders:
+              - content-type
+            AllowOrigins: 
+              - https://dki4kef2jvmhm.cloudfront.net
+
+  WaterMeInsertFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: webar-lambda-watermeinsert/
+      Handler: app.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      FunctionName: webar-lambda-watermeinsert
+      Tags:
+        project: webar
+      Environment:
+        Variables:
+          DDBTABLENAME: !Ref WateringHistoryDDB
+          AWSREGION: eu-central-1
+      Role: !GetAtt WaterMeInsertFunctionRole.Arn
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors: 
+            AllowMethods: 
+              - POST
+            AllowHeaders:
+              - content-type
+            AllowOrigins: 
+              - https://dki4kef2jvmhm.cloudfront.net
+
+
+  ##########################################################################
+  #   IoT                                                                  #
+  ##########################################################################
+  SensorDataIoTTopicRule:
+    Type: AWS::IoT::TopicRule
+    Properties: 
+      RuleName: webar_iottopicrule_writesensordatatoddb
+      Tags: 
+        - Key: project
+          Value: webar
+      TopicRulePayload:
+        Actions:
+        - DynamoDBv2:
+            PutItem:
+              TableName: !Ref SensorDataDDB
+            RoleArn: !GetAtt SensorDataIoTTopicRuleRole.Arn
+        Description: Write sensor data ingested from sensor to ddb
+        RuleDisabled: false
+        Sql: SELECT *, timeEpoch + 30*24*60*60 as timeToLive FROM "webar-iottopic-sensordata"
+        
+
+  ##########################################################################
+  #   IAM                                                                  #
+  ##########################################################################
+  SensorDataSelectFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: webar-role-lambdasensordataselect
+      Tags: 
+      - Key: project
+        Value: webar
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Principal:
+            Service: lambda.amazonaws.com
+          Effect: Allow
+          Action: sts:AssumeRole
+
+  SensorDataSelectFunctionBasicExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdasensordataselectbasicexecution
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
+          - Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-sensordataselect:*
+      Roles: 
+        - !Ref SensorDataSelectFunctionRole
+
+  SensorDataSelectFunctionDDBExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdasensordataselectddbexecution
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: dynamodb:Query
+            Resource: !GetAtt SensorDataDDB.Arn
+      Roles: 
+        - !Ref SensorDataSelectFunctionRole
+
+  WaterMeSelectFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: webar-role-lambdawatermeselect
+      Tags: 
+        - Key: project
+          Value: webar
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Principal:
+              Service: lambda.amazonaws.com
+            Effect: Allow
+            Action: sts:AssumeRole
+
+  WaterMeSelectFunctionBasicExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdawatermeselectbasicexecution
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
+          - Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeselect:*
+      Roles: 
+        - !Ref WaterMeSelectFunctionRole
+
+  WaterMeSelectFunctionDDBExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdawatermeselectddbexecution
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: dynamodb:Query
+            Resource: !GetAtt WateringHistoryDDB.Arn
+      Roles: 
+        - !Ref WaterMeSelectFunctionRole
+  
+  WaterMeInsertFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: webar-role-lambdawatermeinsert
+      Tags: 
+        - Key: project
+          Value: webar
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Principal:
+              Service: lambda.amazonaws.com
+            Effect: Allow
+            Action: sts:AssumeRole
+
+  WaterMeInsertFunctionBasicExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdawatermeinsertbasicexecutionpolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: logs:CreateLogGroup
+            Resource: arn:aws:logs:eu-central-1:268357442233:*
+          - Effect: Allow
+            Action: 
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: arn:aws:logs:eu-central-1:268357442233:log-group:/aws/lambda/webar-lambda-watermeinsert:*
+      Roles: 
+        - !Ref WaterMeInsertFunctionRole
+
+  WaterMeInsertFunctionDDBExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: webar-policy-lambdawatermeinsertddbexecution
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: dynamodb:PutItem
+            Resource: !GetAtt WateringHistoryDDB.Arn
+      Roles: 
+        - !Ref WaterMeInsertFunctionRole
+
+  SensorDataIoTTopicRuleRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      RoleName: webar-role-sensordataiottopicrule
+      Description: Allow IoT Topic Rule to write sensor data to DDB
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: iot.amazonaws.com
+          Action: sts:AssumeRole
+      Policies: 
+      - PolicyName: IoTDynamoDBTablePutAccessPolicy
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action: dynamodb:PutItem
+            Resource: !GetAtt SensorDataDDB.Arn
+      Tags: 
+      - Key: project
+        Value: webar
+
+  WateringHistoryDDBScalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+              - application-autoscaling.amazonaws.com
+          Action:
+            - sts:AssumeRole
+      Path: /
+      Policies:
+      - PolicyName: root
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: Allow
+              Action:
+                - dynamodb:DescribeTable
+                - dynamodb:UpdateTable
+                - cloudwatch:PutMetricAlarm
+                - cloudwatch:DescribeAlarms
+                - cloudwatch:GetMetricStatistics
+                - cloudwatch:SetAlarmState
+                - cloudwatch:DeleteAlarms
+              Resource: "*"
+  
+  SensorDataDDBScalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+              - application-autoscaling.amazonaws.com
+          Action:
+            - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:DescribeTable
+                  - dynamodb:UpdateTable
+                  - cloudwatch:PutMetricAlarm
+                  - cloudwatch:DescribeAlarms
+                  - cloudwatch:GetMetricStatistics
+                  - cloudwatch:SetAlarmState
+                  - cloudwatch:DeleteAlarms
+                Resource: "*"
+
+
+  ##########################################################################
+  #   Application Auto Scaling                                             #
+  ##########################################################################
+  SensorDataDDBWriteCapacityScalableTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: 10
+      MinCapacity: 1
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref SensorDataDDB
+      RoleARN: !GetAtt SensorDataDDBScalingRole.Arn
+      ScalableDimension: dynamodb:table:WriteCapacityUnits
+      ServiceNamespace: dynamodb
+
+  SensorDataDDBWriteScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: SensorDataDDBWriteAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref SensorDataDDBWriteCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBWriteCapacityUtilization
+
+  SensorDataDDBReadCapacityScalableTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: 10
+      MinCapacity: 1
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref SensorDataDDB
+      RoleARN: !GetAtt SensorDataDDBScalingRole.Arn
+      ScalableDimension: dynamodb:table:ReadCapacityUnits
+      ServiceNamespace: dynamodb
+
+  SensorDataDDBReadScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: SensorDataDDBReadAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref SensorDataDDBReadCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBReadCapacityUtilization
+
+  WateringHistoryDDBWriteCapacityScalableTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: 10
+      MinCapacity: 1
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref WateringHistoryDDB
+      RoleARN: !GetAtt WateringHistoryDDBScalingRole.Arn
+      ScalableDimension: dynamodb:table:WriteCapacityUnits
+      ServiceNamespace: dynamodb
+
+  WateringHistoryDDBWriteScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: WateringHistoryDDBWriteAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref WateringHistoryDDBWriteCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBWriteCapacityUtilization
+
+  WateringHistoryDDBReadCapacityScalableTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: 10
+      MinCapacity: 1
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref WateringHistoryDDB
+      RoleARN: !GetAtt WateringHistoryDDBScalingRole.Arn
+      ScalableDimension: dynamodb:table:ReadCapacityUnits
+      ServiceNamespace: dynamodb
+
+  WateringHistoryDDBReadScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: WateringHistoryDDBReadAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref WateringHistoryDDBReadCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBReadCapacityUtilization
+
+
+Outputs:
+  SensorDataSelectFunction:
+    Description: Query sensor data from ddb
+    Value: !GetAtt SensorDataSelectFunction.Arn
+  WaterMeSelectFunction:
+    Description: Query watering history from ddb
+    Value: !GetAtt WaterMeSelectFunction.Arn
+  WaterMeInsertFunction:
+    Description: Write watering record to ddb
+    Value: !GetAtt WaterMeInsertFunction.Arn
+  SensorDataDDB:
+    Description: Dynamodb table storing sensor data
+    Value: !GetAtt SensorDataDDB.Arn
+  WateringHistoryDDB:
+    Description: Dynamodb table storing watering history
+    Value: !GetAtt WateringHistoryDDB.Arn
+  SensorDataIoTTopicRule:
+    Description: IoT Topic Rule to write sensor data from MQTT message queue to DDB
+    Value: !GetAtt SensorDataIoTTopicRule.Arn

@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Deploy the frontend of WebAR prototype using SAM template.yaml
+Parameters:
+  FrontendS3BucketName:
+    Description: Name of S3 bucket storing frontend's static assets (HTML, CSS, JS)
+    Type: String
+    Default: webar-s3-frontend
+  ResourceKey:
+    Description: Key of the key-value tag of a AWS resource
+    Type: String
+    Default: project
+  ResourceValue:
+    Description: Value of the key-value tag of a AWS resource
+    Type: String
+    Default: webar
+  
+Resources:
+  ##########################################################################
+  #   S3                                                                   #
+  ##########################################################################
+  FrontendS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: !Ref FrontendS3BucketName
+      Tags: 
+        - Key: !Ref ResourceKey
+          Value: !Ref ResourceValue
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
+            BucketKeyEnabled: true
+
+  FrontendS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref FrontendS3Bucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: Allow
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref FrontendS3Bucket
+                - /*
+            Principal: '*'
+
+  ##########################################################################
+  #   CloudFront                                                           #
+  ##########################################################################
+  FrontendCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig: 
+        Enabled: "true"
+        Comment: "Serves webar's frontend static assets from S3 bucket"
+        Origins: 
+          - DomainName: !Select [1, !Split ["//", !GetAtt FrontendS3Bucket.WebsiteURL]]
+            Id: !GetAtt FrontendS3Bucket.WebsiteURL
+            CustomOriginConfig: 
+              OriginProtocolPolicy: "http-only"
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: "redirect-to-https"
+          TargetOriginId: !GetAtt FrontendS3Bucket.WebsiteURL
+          CachePolicyId: "658327ea-f89d-4fab-a63d-7e88639e58f6"
+      Tags: 
+        - Key: !Ref ResourceKey
+          Value: !Ref ResourceValue
+
+Outputs:
+  FrontendS3Bucket:
+    Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)."
+    Value: !GetAtt FrontendS3Bucket.WebsiteURL
+  FrontendCloudFrontDistribution:
+    Description: "CloudFront Distribution serving frontend's static assets stored in S3 bucket with S3 bucket's website static hosting URL as custom domain. "
+    Value: !GetAtt FrontendCloudFrontDistribution.DomainName
