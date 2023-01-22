@@ -86,7 +86,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - https://dki4kef2jvmhm.cloudfront.net
+              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -112,7 +112,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - https://dki4kef2jvmhm.cloudfront.net
+              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
@@ -138,7 +138,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - https://dki4kef2jvmhm.cloudfront.net
+              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
 
 
   ##########################################################################

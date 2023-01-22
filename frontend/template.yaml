@@ -76,9 +76,11 @@ Resources:
           Value: !Ref ResourceValue
 
 Outputs:
-  FrontendS3Bucket:
+  FrontendS3BucketWebsiteURL:
     Description: "S3 bucket storing frontend's static asssets (HTML, CSS, JS)."
     Value: !GetAtt FrontendS3Bucket.WebsiteURL
-  FrontendCloudFrontDistribution:
+  FrontendCloudFrontDistributionDomainName:
     Description: "CloudFront Distribution serving frontend's static assets stored in S3 bucket with S3 bucket's website static hosting URL as custom domain. "
     Value: !GetAtt FrontendCloudFrontDistribution.DomainName
+    Export:
+      Name: !Sub ${AWS::StackName}:FrontendCloudFrontDistributionDomainName
