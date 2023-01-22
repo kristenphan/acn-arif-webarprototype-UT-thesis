@@ -6,6 +6,12 @@ Globals:
   Function:
     Timeout: 3
     MemorySize: 128
+
+Parameters:
+  FrontendStackName:
+    Description: Name of CloudFormation stack that deploys the frontend of WebAR prototype
+    Type: String
+    Default: webar-cfnstack-frontend
   
 Resources:
   ##########################################################################
@@ -86,7 +92,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -112,7 +118,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
@@ -138,8 +144,8 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName
-
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
+              
 
   ##########################################################################
   #   IoT                                                                  #
