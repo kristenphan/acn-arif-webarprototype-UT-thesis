@@ -114,37 +114,6 @@ jobs:
       failOnStandardError: true
     displayName: "Upload ./assets to S3 bucket webar-s3-frontend"
 
-# - job: BuildandDeployBackend
-#   steps:
-  # # - task: NodeTool@0
-  # #   inputs:
-  # #     versionSpec: "16.x"
-  # #   displayName: "Install Node.js"
-
-  # # - script: pip install aws-sam-cli
-  # #   displayName: "Install AWS SAM CLI"
-
-  # # - script: sam --version
-  # #   displayName: "Confirm AWS SAM CLI installed"
-
-  # - task: Npm@1
-  #   inputs:
-  #     command: 'install'
-  #     workingDir: './backend/webar-lambda-sensordataselect'
-  #   displayName: "Install npm modules for webar-lambda-sensordataselect"
-
-  # - task: Npm@1
-  #   inputs:
-  #     command: 'install'
-  #     workingDir: './backend/webar-lambda-watermeselect'
-  #   displayName: "Install npm modules for webar-lambda-watermeselect"
-
-  # - task: Npm@1
-  #   inputs:
-  #     command: 'install'
-  #     workingDir: './backend/webar-lambda-watermeinsert'
-  #   displayName: "Install npm modules for webar-lambda-watermeinsert"
-
   - script: |
       cd ./backend
       sam build
