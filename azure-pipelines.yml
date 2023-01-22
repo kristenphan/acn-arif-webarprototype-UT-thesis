@@ -34,7 +34,6 @@ jobs:
       scriptType: 'inline'
       inlineScript: 'ls; sam deploy'
       disableAutoCwd: true
-      workingDirectory: './frontend'
     displayName: "Provision AWS resources using sam build artifacts"
 
   - task: CmdLine@2
