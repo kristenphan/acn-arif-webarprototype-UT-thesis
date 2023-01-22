@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: BuildandDeployFrontend
+- job: BuildandDeployFrontend+Backend
   steps:
   - task: NodeTool@0
     inputs:
