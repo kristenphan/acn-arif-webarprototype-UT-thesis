@@ -93,10 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Go to About Me page 1 when "About me" button on Home page is clicked
 		document.getElementById("home-aboutme-button").addEventListener("click", () => {
 			// Resize dashboard
-			document.getElementById("dashboard").style.height = "730px";
+			// document.getElementById("dashboard").style.height = "730px";
+			document.getElementById("dashboard").style.height = "980px";
 			// Update dashboard content
 			document.getElementById("dashboard-home").classList.add("hidden");
-			document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
+			// document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
+			document.getElementById("dashboard-aboutme-page").classList.remove("hidden");
 			// Render gltf model
 			// plantGLTF.scene.children[0].visible = true;
 		});
@@ -121,42 +123,51 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 
-		// Return to Home page when "Back" button on About Me page 1 is clicked
-		document.getElementById("aboutme-page1-back-button").addEventListener("click", () => {
+		// // Return to Home page when "Back" button on About Me page 1 is clicked
+		// document.getElementById("aboutme-page1-back-button").addEventListener("click", () => {
+		// 	// Resize dashboard
+		// 	document.getElementById("dashboard").style.height = "700px";
+		// 	// Update dashboard content
+		// 	document.getElementById("dashboard-home").classList.remove("hidden");
+		// 	document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
+		// 	// plantGLTF.scene.children[0].visible = false;
+		// });
+
+		// // Go to About Me page 2 when "Next" button on About Me page 1 is clicked
+		// document.getElementById("aboutme-page1-next-button").addEventListener("click", () => {
+		// 	// Resize dashboard
+		// 	document.getElementById("dashboard").style.height = "980px";
+		// 	// Update dashboard content
+		// 	document.getElementById("dashboard-aboutme-page2").classList.remove("hidden");
+		// 	document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
+		// 	// plantGLTF.scene.children[0].visible = false;
+		// });
+
+		// // Go to About Me page 1 when "Back" button on About Me page 1 is clicked
+		// document.getElementById("aboutme-page2-back-button").addEventListener("click", () => {
+		// 	// Resize dashboard
+		// 	document.getElementById("dashboard").style.height = "730px";
+		// 	// Update dashboard content
+		// 	document.getElementById("dashboard-aboutme-page2").classList.add("hidden");
+		// 	document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
+		// 	// plantGLTF.scene.children[0].visible = true;
+		// });
+
+		// // Return to Home page when "Return" button on About Me page 2 is clicked
+		// document.getElementById("aboutme-page2-return-button").addEventListener("click", () => {
+		// 	// Resize dashboard
+		// 	document.getElementById("dashboard").style.height = "700px";
+		// 	// Update dashboard content
+		// 	document.getElementById("dashboard-aboutme-page2").classList.add("hidden");
+		// 	document.getElementById("dashboard-home").classList.remove("hidden");
+		// });
+
+		// Return to Home page when "Return" button on About Me page is clicked
+		document.getElementById("aboutme-page-return-button").addEventListener("click", () => {
 			// Resize dashboard
 			document.getElementById("dashboard").style.height = "700px";
 			// Update dashboard content
-			document.getElementById("dashboard-home").classList.remove("hidden");
-			document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
-			// plantGLTF.scene.children[0].visible = false;
-		});
-
-		// Go to About Me page 2 when "Next" button on About Me page 1 is clicked
-		document.getElementById("aboutme-page1-next-button").addEventListener("click", () => {
-			// Resize dashboard
-			document.getElementById("dashboard").style.height = "980px";
-			// Update dashboard content
-			document.getElementById("dashboard-aboutme-page2").classList.remove("hidden");
-			document.getElementById("dashboard-aboutme-page1").classList.add("hidden");
-			// plantGLTF.scene.children[0].visible = false;
-		});
-
-		// Go to About Me page 1 when "Back" button on About Me page 1 is clicked
-		document.getElementById("aboutme-page2-back-button").addEventListener("click", () => {
-			// Resize dashboard
-			document.getElementById("dashboard").style.height = "730px";
-			// Update dashboard content
-			document.getElementById("dashboard-aboutme-page2").classList.add("hidden");
-			document.getElementById("dashboard-aboutme-page1").classList.remove("hidden");
-			// plantGLTF.scene.children[0].visible = true;
-		});
-
-		// Return to Home page when "Return" button on About Me page 2 is clicked
-		document.getElementById("aboutme-page2-return-button").addEventListener("click", () => {
-			// Resize dashboard
-			document.getElementById("dashboard").style.height = "700px";
-			// Update dashboard content
-			document.getElementById("dashboard-aboutme-page2").classList.add("hidden");
+			document.getElementById("dashboard-aboutme-page").classList.add("hidden");
 			document.getElementById("dashboard-home").classList.remove("hidden");
 		});
 
