@@ -92,7 +92,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
 
   WaterMeSelectFunction:
     Type: AWS::Serverless::Function 
@@ -118,7 +118,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
 
   WaterMeInsertFunction:
     Type: AWS::Serverless::Function 
@@ -144,7 +144,7 @@ Resources:
             AllowHeaders:
               - content-type
             AllowOrigins: 
-              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
+              - !Sub ['https://${CDNEndpoint}', CDNEndpoint: !ImportValue webar-cfnstack-frontend:FrontendCloudFrontDistributionDomainName]
               
 
   ##########################################################################
