@@ -105,22 +105,6 @@ html {
 	padding: 50px;
 }
 
-.dashboard-aboutme-page1-buttons {
-  white-space: nowrap; /** force buttons to stay side by side **/
-  margin-top: 170px;
-  margin-left: 130px;
-}
-
-.dashboard-aboutme-back-button {
-  margin-right: 230px;
-}
-
-.dashboard-aboutme-page2-buttons {
-  white-space: nowrap; /** force buttons to stay side by side **/
-  margin-top: 60px;
-  margin-left: 130px;
-}
-
 .dashboard-aboutme-buttons {
   position: absolute;
   bottom: 50px; 
