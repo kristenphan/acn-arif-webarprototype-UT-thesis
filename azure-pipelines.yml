@@ -1,7 +1,4 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+# This CI/CD pipeline builds and deploys the WebAR prototype to AWS. 
 
 trigger:
 - master
@@ -10,7 +7,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: BuildandDeployFrontendAndBackend
+- job: BuildandDeployFrontendandBackend
   steps:
   - script: pip install aws-sam-cli
     displayName: "Install AWS SAM CLI"
