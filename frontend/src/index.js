@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Go to About Me page 1 when "About me" button on Home page is clicked
 		document.getElementById("home-aboutme-button").addEventListener("click", () => {
 			// Resize dashboard
-			document.getElementById("dashboard").style.height = "980px";
+			document.getElementById("dashboard").style.height = "1100px";
 			// Update dashboard content
 			document.getElementById("dashboard-home").classList.add("hidden");
 			document.getElementById("dashboard-aboutme-page").classList.remove("hidden");
