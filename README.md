@@ -14,7 +14,7 @@ This repository stores the source code of the WebAR prototype developed by Krist
 ## PROTOTYPE SERVERLESS ARCHITECTURE
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/).
 2. Rendering engine: implements [three.js](https://threejs.org/).
-3. Hand gesture detection: implements [Tensorflow's pretrained fingerpose model](https://github.com/andypotato/fingerpose) for thumbs-up and thumbs-down gestures.
+3. Hand gesture recognition: implements [Tensorflow's pretrained fingerpose model](https://github.com/andypotato/fingerpose) for thumbs-up and thumbs-down gestures.
 4. Build tools: [webpack](https://webpack.js.org/) for concatenating all .JS files into a single .JS file; [babel](https://babeljs.io/) for transpiling code so that older browsers can understand; [yarn](https://yarnpkg.com/) as package manager since it was easier to install a dependency for Tensorflow fingerpose model using yarn than using npm; [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html) is used to deploy SAM/ CloudFormation template for deploying AWS resources.  
 5. Moisture sensor and microcontroler: a physical houseplant is fitted with a generic moisture sensor and an [ESP32 microcontroller](https://www.espressif.com/en/products/socs/esp32). The sensor and the microcontroller are configured using [Arduino IDE](https://www.arduino.cc/en/software/) - see code in ./backend/arduino-esp32.   
 6. Frontend: consists of S3 frontend bucket + CloudFront distribution; The tracking, rendering, and Tensorflow all run in browser. 
