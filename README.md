@@ -53,7 +53,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 
 ## LIMITATIONS
 1. IAM permissions in Appendix A should be restricted for S3, IoT, and CloudFront. Full access was given during development because of time constraints. 
-2. Lambda functions are publiclly accessible but are configured with a CORS policy to accept only traffic from CloudFront's CDN endpoint. As new lambda functions are created with new lambda function URLs, the lambda function URLs need to be updated accordingly in ```./frontend/.env``` so that the frontend can invoke the lambdas at their latest function URLs.   
+2. Lambda functions are publicly accessible but are configured with a CORS policy to accept only traffic from CloudFront's CDN endpoint. As new lambda functions are created with new lambda function URLs, the lambda function URLs need to be updated accordingly in ```./frontend/.env``` so that the frontend can invoke the lambdas at their new function URLs.
 
 ## APPENDIX A: IAM PERMISSIONS FOR USER PROFILE
 
