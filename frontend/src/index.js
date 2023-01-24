@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Instantiate MindARThree object which auto instantiates three.js renderder, CSSRenderer, scene, CSSScene, perspective camera
 		const mindarThree = new window.MINDAR.IMAGE.MindARThree({
 			container: document.body, // size of three.js renderer <canvas>
-			imageTargetSrc: "../assets/targets/acn-2.mind",
+			imageTargetSrc: "../assets/targets/acn.mind",
 		});
 		const {renderer, cssRenderer, scene, cssScene, camera} = mindarThree;
 		// Add light to scene to "light up" GLTF model. Otherwise, model will be completely dark
