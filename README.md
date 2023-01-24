@@ -2,14 +2,17 @@
 ## INTRODUCTION
 This repository stores the outputs of Kristen Phan's internship (kristen.phan@accenture.com):
 1. WebAR prototype: AR running directly in a web browser; deployed on an AWS serverless architecture; helps monitor the health of houseplant through the use of an AR dashboard with real-time data from soil moisture sensor and watering history records.
+2. AR Implementation Framework: guides the design and implementation of AR solutions so that ACN can deliver many AR solutions to come, not just a single WebAR prototype that Kristen's built; View ```./AR-implementation-framework-presentation-slides``` for details on the framework.
+
+### WebAR Prototype Demo
 <br />
-<br />
+
 ![WebAR prototype demo](./webar-prototype-demo.gif)
 <br />
 
-2. AR Implementation Framework: guides the design and implementation of AR solutions so that ACN can deliver many AR solutions to come, not just a single WebAR prototype that Kristen's built.
+### AR Implementation Framework
 <br />
-<br />
+
 ![AR Implementation Framework](./AR-implementation-framework.jpg)
 <br />
 
@@ -47,9 +50,6 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 <br />
 ![WebAR prototype serverless architecture](./prototype-serverless-architecture.jpg)
 <br />
-
-## AR IMPLEMENTATION FRAMEWORK
-View ```./AR-implementation-framework-presentation-slides``` for details on the framework. A recording of the prototype is also included in the slide deck.
 
 ## LIMITATIONS
 1. IAM permissions in Appendix A should be restricted for S3, IoT, and CloudFront. Full access was given during development because of time constraints. 
