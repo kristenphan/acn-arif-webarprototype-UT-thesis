@@ -7,7 +7,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 ### WebAR Prototype Demo
 <br />
 
-![WebAR prototype demo](./webar-prototype-demo.gif)
+![WebAR prototype demo](./webar-prototype-demo.gif =300x649)
 <br />
 
 ### AR Implementation Framework
@@ -30,7 +30,9 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/). The image marker can be found in ```./frontend/assets/targets/acn.png```. The image marker is compiled using [MindAR's compiler](https://hiukim.github.io/mind-ar-js-doc/quick-start/compile) and can be found in ```./frontend/assets/targets/acn.mind```.
 <br />
 <br />
-![Image marker](./frontend/assets/targets/acn.png)
+
+![Image marker](./frontend/assets/targets/acn.png =300x139)
+
 <br />
 
 2. Rendering engine: implements [three.js](https://threejs.org/).
@@ -45,7 +47,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 11. DynamoDB: time-to-live is configured to auto expire sensor data more than 30 days old;
 12. IoT: register sensor device and create a device certificate which should be included in the ```./backend/arduino-esp32/secrets.h``` (Note that ```secrets.h``` is not tracked by Git for security purposes). Using the device certificate, the microcontroller authenticates and publish sensor data to IoT Core every 5 seconds. IoT Core then writes all sensor data arrived at the specified MQTT message queue to ddb. 
 13. CloudFormation: Use SAM/ CloudFormation templates to deploy the frontend and backend resources on AWS.
-14. Azure DevOps: store source code in Azure DevOps Repository and execute CI/CD pipeline defined in ```azure-pipelines.yml``` in Azure DevOps Pipelines. In ```azure-pipelines.yaml```, SAM CLI commands and others are executed to build and deploy the frontend and backend to AWS. 
+14. Azure DevOps: store source code in Azure DevOps Repository and execute CI/CD pipeline defined in ```./azure-pipelines.yml``` in Azure DevOps Pipelines. In ```./azure-pipelines.yaml```, SAM CLI commands and others are executed to build and deploy the frontend and backend to AWS. 
 <br />
 <br />
 ![WebAR prototype serverless architecture](./prototype-serverless-architecture.jpg)
