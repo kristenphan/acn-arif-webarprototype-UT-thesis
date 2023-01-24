@@ -12,7 +12,8 @@ module.exports = {
     filename: "[name].bundle.js"
   },
   devServer: {
-    static: "./"
+    static: "./",
+    hot: true
   },
   // Give performance warnings when entry point and output assets execeed a file size limit in bytes
   performance: {

@@ -39,16 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		const cssAnchor = mindarThree.addCSSAnchor(0);
 		cssAnchor.group.add(dashboardCSS3DObject);
 
-		// Add event listeners for dashboard-home-button
-		document.getElementById("home-waterme-button").addEventListener("click", () => {
-			window.location.href = "../waterme.html";
-		});
-
 		document.getElementById("home-viewhistory-button").addEventListener("click", async() => {
+			// Update dashboard content
 			document.getElementById("dashboard-home").classList.add("hidden");
 			document.getElementById("dashboard-viewhistory").classList.remove("hidden");
+			// Invoke lambda to retrieve watering history from dynamodb
 			const records = await getWateringHistory(LambdaFunctionURLWaterMeSelect, plantId);
-			// populate the history table with the latest watering records
+			// populate the dashboard with the latest watering records
 			for (let i = 0; i < records.length; i++) {
 				const recordIdTag = "record" + (i+1).toString();;
 				const iconIdTag = "status" + (i+1).toString();
@@ -77,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 
-		// Go to About Me page 1 when "About me" button on Home page is clicked
+		// Go to About Me page when "About me" button on Home page is clicked
 		document.getElementById("home-aboutme-button").addEventListener("click", () => {
 			// Resize dashboard
 			document.getElementById("dashboard").style.height = "1100px";
