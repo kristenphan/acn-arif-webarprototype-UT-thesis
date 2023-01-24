@@ -1,7 +1,14 @@
 # WebAR Prototype + AR Implementation Framework
 This repository stores the outputs of Kristen Phan's internship (kristen.phan@accenture.com):
 1. WebAR prototype: AR running directly in a web browser; deployed on an AWS serverless architecture; helps monitor the health of houseplant through the use of an AR dashboard with real-time data from soil moisture sensor and watering history records.
+<br>
+![WebAR prototype demo](./webar-prototype-demo.mp4)
+<br>
+
 2. AR Implementation Framework: guides the design and implementation of AR solutions so that ACN can deliver many AR solutions to come, not just a single WebAR prototype that Kristen's built.
+<br>
+![AR Implementation Framework](./AR-implementation-framework.jpg)
+<br>
 
 ## HOW TO DEPLOY THE APPLICATION?
 1. Create an AWS account and IAM user profile
@@ -17,7 +24,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/). The image marker can be found in ```./frontend/assets/targets/acn.png```. The image marker is compiled using [MindAR's compiler](https://hiukim.github.io/mind-ar-js-doc/quick-start/compile) and can be found in ```./frontend/assets/targets/acn.mind```.
 <br>
 
-![Alt text](./frontend/assets/targets/acn.png?raw=true "Image marker")
+![Image marker](./frontend/assets/targets/acn.png)
 <br>
 
 2. Rendering engine: implements [three.js](https://threejs.org/).
