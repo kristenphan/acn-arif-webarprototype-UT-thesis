@@ -1,5 +1,7 @@
-# ACN WebAR Prototype
-This repository stores the source code of the WebAR prototype developed by Kristen Phan (kristen.phan@accenture.com).
+# WebAR Prototype + AR Implementation Framework
+This repository stores the outputs of Kristen Phan's internship (kristen.phan@accenture.com):
+1. WebAR prototype: AR running directly in a web browser; deployed on an AWS serverless architecture; helps monitor the health of houseplant through the use of an AR dashboard with real-time data from soil moisture sensor and watering history records.
+2. AR Implementation Framework: guides the design and implementation of AR solutions so that ACN can deliver many AR solutions to come, not just a single WebAR prototype that Kristen's built.
 
 ## HOW TO DEPLOY THE APPLICATION?
 1. Create an AWS account and IAM user profile
@@ -9,7 +11,7 @@ This repository stores the source code of the WebAR prototype developed by Krist
 5. Push the code to Azure DevOps Repository
 5. Create a new Pipeline in Azure DevOps Pipelines by referencing ```./azure-pipelines.yml```
 6. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
-7. The deployed application runs on all major browsers (best on iOS Safari/ Chrome)
+7. The deployed application runs on all major browsers (best on iOS Safari/ Chrome). When running the application in a browser, point the device at the image marker. An AR dashboard for monitoring the health of houseplant will be rendered on top of the image marker. 
 
 ## PROTOTYPE SERVERLESS ARCHITECTURE
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/). The image marker can be found in ```./frontend/assets/targets/acn.png```. The image marker is compiled using [MindAR's compiler](https://hiukim.github.io/mind-ar-js-doc/quick-start/compile) and can be found in ```./frontend/assets/targets/acn.mind```.
@@ -35,6 +37,9 @@ This repository stores the source code of the WebAR prototype developed by Krist
 
 ![Alt text](./prototype-serverless-architecture.jpg?raw=true "WebAR prototype serverless architecture")
 <br>
+
+## AR IMPLEMENTATION FRAMEWORK
+View ```./AR-implementation-framework-presentation-slides``` for details on the framework. A recording of the prototype is also included in the slide deck.
 
 ## LIMITATIONS
 1. IAM permissions in Appendix A should be restricted for S3, IoT, and CloudFront. Full access was given during development because of time constraints. 
