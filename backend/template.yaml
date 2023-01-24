@@ -502,7 +502,7 @@ Resources:
 
 
 Outputs:
-  SensorDataSelectFunction:
+  WebARLambdaSensorDataSelectURL:
     Description: Query sensor data from ddb
     Value: !GetAtt SensorDataSelectFunction.Arn
   WaterMeSelectFunction:
