@@ -5,11 +5,11 @@ This repository stores the source code of the WebAR prototype developed by Krist
 1. Create an AWS account and IAM user profile
 2. Attach the following permissions to the user profile - see Appendix A
 3. Create [access key Id and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) for the user profile
-4. Create an AWS service connection within Azure DevOps to allow Azure DevOps to connect to AWS
+4. Create an AWS service connection called "aws-sc" as referenced in ./azure-pipelines.yml in Azure DevOps console to allow Azure DevOps to connect to AWS
 5. Push the code to Azure DevOps Repository
 5. Create a new Pipeline in Azure DevOps Pipelines by referencing azure-pipelines.yml
 6. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
-7. The deployed application runs on all major browsers (best on Safari on iOS)
+7. The deployed application runs on all major browsers (best on iOS Safari/ Chrome)
 
 ## PROTOTYPE SERVERLESS ARCHITECTURE
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/).
