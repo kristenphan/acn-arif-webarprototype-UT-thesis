@@ -81,16 +81,6 @@ jobs:
       awsCredentials: 'aws-sc'
       regionName: 'eu-central-1'
       awsCommand: 's3'
-      awsSubCommand: 'cp'
-      awsArguments: './frontend/waterme.html s3://webar-s3-frontend'
-      failOnStandardError: true
-    displayName: "Upload waterme.html to S3 bucket webar-s3-frontend"
-
-  - task: AWSCLI@1
-    inputs:
-      awsCredentials: 'aws-sc'
-      regionName: 'eu-central-1'
-      awsCommand: 's3'
       awsSubCommand: 'sync'
       awsArguments: './frontend/dist s3://webar-s3-frontend/dist'
       failOnStandardError: true
