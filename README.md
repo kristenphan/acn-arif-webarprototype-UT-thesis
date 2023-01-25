@@ -17,14 +17,16 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 <br />
 
 ## HOW TO DEPLOY THE APPLICATION?
-1. Create an AWS account and IAM user profile
-2. Attach the following permissions to the user profile - see Appendix A
-3. Create [access key Id and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) for the user profile
-4. Create an AWS service connection called "aws-sc" as referenced in ```./azure-pipelines.yml``` in Azure DevOps console to allow Azure DevOps to connect to AWS
-5. Push the code to Azure DevOps Repository
-5. Create a new Pipeline in Azure DevOps Pipelines by referencing ```./azure-pipelines.yml```
-6. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
-7. The deployed application runs on all major browsers (best on iOS Safari/ Chrome). When running the application in a browser, point the device at the image marker. An AR dashboard for monitoring the health of houseplant will be rendered on top of the image marker. 
+1. Create a ```secrets.h``` which defines ```WIFI_SSID``` and ```WIFI_PASSWORD``` (Wifi credentials for the ESP32 to connect to the Wifi), the sensor's device certificate (public and private key) issued by AWS IoT Core when registering the sensor in AWS IoT Core console, and the AWS Root CA public key.
+2. Use [Arduino IDE](https://www.arduino.cc/en/software/) to compile and upload ```secrets.h``` along with ```./backend/esp32/stream-to-iot.ino``` to the ESP32 microcontroller, allowing the microcontroller to connect to a Wifi network and publish sensor data to AWS IoT Core. This is because code for the ESP32 is not part of the CI/CD pipeline and needs to be compiled and uploaded to the ESP32 manually. 
+3. Create an AWS account and IAM user profile
+4. Attach the following permissions to the user profile - see Appendix A
+5. Create [access key Id and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) for the user profile
+6. Create an AWS service connection called "aws-sc" as referenced in ```./azure-pipelines.yml``` in Azure DevOps console to allow Azure DevOps to connect to AWS
+7. Push the code to Azure DevOps Repository
+8. Create a new Pipeline in Azure DevOps Pipelines by referencing ```./azure-pipelines.yml```
+9. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
+10. The deployed application runs on all major browsers (best on iOS Safari/ Chrome). When running the application in a browser, point the device at the image marker. An AR dashboard for monitoring the health of houseplant will be rendered as anchored to the image marker. 
 
 ## PROTOTYPE SERVERLESS ARCHITECTURE
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/). The image marker can be found in ```./frontend/assets/targets/acn.png```. The image marker is compiled using [MindAR's compiler](https://hiukim.github.io/mind-ar-js-doc/quick-start/compile) and can be found in ```./frontend/assets/targets/acn.mind```.
@@ -38,8 +40,8 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 2. Rendering engine: implements [three.js](https://threejs.org/).
 3. Hand gesture recognition: implements [Tensorflow's pre-trained fingerpose model](https://github.com/andypotato/fingerpose) for thumbs-up and thumbs-down gestures.
 4. Build tools: [webpack](https://webpack.js.org/) for concatenating all .JS files into a single .JS file; [babel](https://babeljs.io/) for transpiling code so that older browsers can understand; [yarn](https://yarnpkg.com/) as package manager since it was easier to install a dependency for Tensorflow fingerpose model using yarn than using npm; [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html) is used to deploy SAM/ CloudFormation template for deploying AWS resources.  
-5. Moisture sensor and microcontroler: a physical houseplant is fitted with a generic moisture sensor and an [ESP32 microcontroller](https://www.espressif.com/en/products/socs/esp32). The sensor and the microcontroller are configured using [Arduino IDE](https://www.arduino.cc/en/software/) - see code in ```./backend/arduino-esp32```.   
-6. Frontend: consists of S3 frontend bucket + CloudFront distribution; The tracking, rendering, and Tensorflow all run in browser. 
+5. Moisture sensor and microcontroler: a physical houseplant is fitted with a generic moisture sensor and an [ESP32 microcontroller](https://www.espressif.com/en/products/socs/esp32). The sensor and the microcontroller are configured using [Arduino IDE](https://www.arduino.cc/en/software/) - see code in ```./backend/arduino-esp32/stream-to-iot.ino```. Not tracked by Git is ```./backend/arduino-esp32/secrets.h```.    
+6. Frontend: consists of S3 frontend bucket + CloudFront distribution; The tracking, rendering, and Tensorflow all run on the frontend using the browser's access to live camera feed. The live camera feed therefore stays on the user's device and is not transmitted elsewhere. 
 7. Backend: consists of Lambda + DDB + IoT
 8. S3: 2 buckets - one bucket storing the build artifacts generated by Azure DevOps Pipelines, another bucket storing the frontend's static assets (HTML, CSS, JS, and media). The S3 frontend bucket is not publicly facing and only accepts traffic from the CloudFront distribution.
 9. CloudFront: sits in front of S3; queries static contents from S3 frontend bucket and serves them to browser via HTTPS since most browsers require HTTPS in order to access webcam when running the AR application.
