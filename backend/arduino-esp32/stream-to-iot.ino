@@ -1,4 +1,4 @@
-#include "secrets.h"
+#include "secrets.h" // Stores Wifi SSID, Wifi password, sensor's device certificate (private and public key), and AWS Root CA's public key
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
@@ -6,14 +6,17 @@
 #include <NTPClient.h> 
 #include <WiFiUdp.h>
  
-// ESP32 pin number (36) which connects to AOUT pin of moisture sensor
+// Define ESP32 pin number (36) which connects to AOUT pin of moisture sensor
 #define AOUT_PIN 36
 
-// Define IoT publish topic and port
+// Define AWS IoT endpoint and port, and IoT publish topic the ESP32 is authorized to public to per sensor's device certificate
 #define AWS_IOT_PUBLISH_TOPIC "webar-iottopic-sensordata"
 #define AWS_IOT_PORT 8883 // for MQTTS
+// const char AWS_IOT_ENDPOINT[] = "a26votdjnsez62-ats.iot.eu-central-1.amazonaws.com";
+#define AWS_IOT_ENDPOINT "a26votdjnsez62-ats.iot.eu-central-1.amazonaws.com"
 
-// Define sensor id of the sensor the plant the sensor is associated with
+// Define the name and id of the soil moisture sensor connected to the ESP32
+#define THINGNAME "webar-iotthing-soilsensor"
 #define SENSOR_ID 1
 
 unsigned long timeEpoch;
