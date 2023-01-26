@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Update water cup image depending on the moisture reading
 			if (moisturePercentage < 30) {
 				document.getElementById("water-cup").src = "../assets/images/water-low.png";	
-			} else if (moisturePercentage <= 30 && moisturePercentage < 60) {
+			} else if (moisturePercentage >= 30 && moisturePercentage < 60) {
 				document.getElementById("water-cup").src = "../assets/images/water-medium.png";	
 			} else {
 				document.getElementById("water-cup").src = "../assets/images/water-high.png";
