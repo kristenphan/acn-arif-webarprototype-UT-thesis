@@ -17,16 +17,17 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 <br />
 
 ## HOW TO DEPLOY THE APPLICATION?
-1. Create a ```secrets.h``` which defines ```WIFI_SSID``` and ```WIFI_PASSWORD``` (Wifi credentials for the ESP32 to connect to the Wifi), the sensor's device certificate (public and private key) issued by AWS IoT Core when registering the sensor in AWS IoT Core console, and the AWS Root CA public key.
-2. Use [Arduino IDE](https://www.arduino.cc/en/software/) to compile and upload ```secrets.h``` along with ```./backend/esp32/stream-to-iot.ino``` to the ESP32 microcontroller, allowing the microcontroller to connect to a Wifi network and publish sensor data to AWS IoT Core. This is because code for the ESP32 is not part of the CI/CD pipeline and needs to be compiled and uploaded to the ESP32 manually. 
-3. Create an AWS account and IAM user profile
-4. Attach the following permissions to the user profile - see Appendix A
-5. Create [access key Id and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) for the user profile
-6. Create an AWS service connection called "aws-sc" as referenced in ```./azure-pipelines.yml``` in Azure DevOps console to allow Azure DevOps to connect to AWS
-7. Push the code to Azure DevOps Repository
-8. Create a new Pipeline in Azure DevOps Pipelines by referencing ```./azure-pipelines.yml```
-9. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
-10. The deployed application runs on all major browsers (best on iOS Safari/ Chrome). When running the application in a browser, point the device at the image marker. An AR dashboard for monitoring the health of houseplant will be rendered as anchored to the image marker. 
+1. Register a sensor as a Thing and request a device certificate for the sensor in IoT Core console 
+2. Create a ```secrets.h``` which defines ```WIFI_SSID``` and ```WIFI_PASSWORD``` (Wifi credentials for the ESP32 to connect to the Wifi), ```AWS_CERT_CRT``` and ```AWS_CERT_PRIVATE``` (the sensor's device certificate: public and private key) issued by AWS IoT Core when registering the sensor in AWS IoT Core console, and ``AWS_CERT_CA``` (the AWS Root CA public key).
+3. Use [Arduino IDE](https://www.arduino.cc/en/software/) to compile and upload ```secrets.h``` along with ```./backend/esp32/stream-to-iot.ino``` to the ESP32 microcontroller, allowing the microcontroller to connect to a Wifi network and publish sensor data to AWS IoT Core. This is because code for the ESP32 is not part of the CI/CD pipeline and needs to be compiled and uploaded to the ESP32 manually. 
+4. Create an AWS account and IAM user profile
+5. Attach the following permissions to the user profile - see Appendix A
+6. Create [access key Id and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) for the user profile
+7. Create an AWS service connection called "aws-sc" as referenced in ```./azure-pipelines.yml``` in Azure DevOps console to allow Azure DevOps
+8. Push the code to Azure DevOps Repository
+9. Create a new Pipeline in Azure DevOps Pipelines by referencing ```./azure-pipelines.yml```
+10. Run the pipeline manually from Azure DevOps Pipelines console. Or the pipeline is auto triggered with a new commit.
+11. The deployed application can be accessed at the deployed CloudFront distribution endpoint and runs on all major browsers (best on iOS Safari/ Chrome). When running the application in a browser, point the device at the image marker. An AR dashboard for monitoring the health of houseplant will be rendered as anchored to the image marker.
 
 ## PROTOTYPE SERVERLESS ARCHITECTURE
 1. Tracking engine: implements image tracking technique by [MindAR](https://hiukim.github.io/mind-ar-js-doc/). The image marker can be found in ```./frontend/assets/targets/acn.png```. The image marker is compiled using [MindAR's compiler](https://hiukim.github.io/mind-ar-js-doc/quick-start/compile) and can be found in ```./frontend/assets/targets/acn.mind```.
@@ -58,6 +59,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 ## LIMITATIONS
 1. IAM permissions in Appendix A should be restricted for S3, IoT, and CloudFront. Full access was given during development because of time constraints. 
 2. Lambda functions are publicly accessible but are configured with a CORS policy to accept only traffic from CloudFront's CDN endpoint. As new lambda functions are created with new lambda function URLs, the lambda function URLs need to be updated accordingly in ```./frontend/.env``` so that the frontend can invoke the lambdas at their new function URLs.
+3. There is not yet a CloudFormation ```AWS::IoT::Thing``` template for the sensor in the ```./backend/template.yaml```. The sensor is currently registered and provided with a device certificate using the IoT Core console. THINGNAME ```webar-iotthing-soilsensor``` and AWS_IOT_PUBLISH_TOPIC ```webar-iottopic-sensordata``` are hard-coded in ```./backend/arduino-esp32/stream-to-iot.ino```. Note that this AWS_IOT_PUBLISH_TOPIC must match with the topic defined in the ```AWS::IoT::TopicRule``` template in ```./backend/template.yaml``` as this Topic Rule propagates the sensor data published to ```webar-iottopic-sensordata``` to a Dynamodb table.
 
 ## APPENDIX A: IAM PERMISSIONS FOR USER PROFILE
 
