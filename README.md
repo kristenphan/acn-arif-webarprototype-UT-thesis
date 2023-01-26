@@ -48,7 +48,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 10. Lambda: public facing but accept only CloudFront Distribution endpoint as the origin. Write and read traffic are isolated to allow lambda to scale independently. 
 11. DynamoDB: time-to-live is configured to auto expire sensor data more than 30 days old;
 12. IoT: register sensor device and create a device certificate which should be included in the ```./backend/arduino-esp32/secrets.h``` (Note that ```secrets.h``` is not tracked by Git for security purposes). Using the device certificate, the microcontroller authenticates and publish sensor data to IoT Core every 5 seconds. IoT Core then writes all sensor data arrived at the specified MQTT message queue to ddb. 
-13. CloudFormation: Use SAM/ CloudFormation templates to deploy the frontend and backend resources on AWS.
+13. CloudFormation: Use SAM CLI and SAM/ CloudFormation templates to deploy the frontend and backend resources on AWS. SAM/ CloudFormation templates are defined in ```./frontend/samconfig.toml```, ```./frontend/template.yaml```, ```./backend/samconfig.toml```, and ```./frontend/template.yaml```.
 14. Azure DevOps: store source code in Azure DevOps Repository and execute CI/CD pipeline defined in ```./azure-pipelines.yml``` in Azure DevOps Pipelines. In ```./azure-pipelines.yaml```, SAM CLI commands and others are executed to build and deploy the frontend and backend to AWS. 
 <br />
 <br />
