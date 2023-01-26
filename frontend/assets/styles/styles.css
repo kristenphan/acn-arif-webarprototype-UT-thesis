@@ -16,7 +16,6 @@ html {
   padding: 40px;
 	border-radius: 20px;
   position: relative;
-	/* opacity: 80%; */
 }
 
 #dashboard-header {
@@ -119,7 +118,7 @@ html {
 
 #vimeo-video {
   position: relative;
-  left: 150px;
+  left: 75px;
 }
 
 form {
