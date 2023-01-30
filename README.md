@@ -3,6 +3,7 @@
 This repository stores the outputs of Kristen Phan's internship (kristen.phan@accenture.com):
 1. WebAR prototype: AR running directly in a web browser; deployed on an AWS serverless architecture; helps monitor the health of houseplant through the use of an AR dashboard with real-time data from soil moisture sensor and watering history records.
 2. AR Implementation Framework: guides the design and implementation of AR solutions so that ACN can deliver many AR solutions to come, not just a single WebAR prototype that Kristen's built; View ```./AR-implementation-framework-presentation-slides``` for details on the framework.
+3. Jira: https://kristenphan.atlassian.net/jira/software/projects/ATP/boards/2
 
 ### WebAR Prototype Demo
 <br />
