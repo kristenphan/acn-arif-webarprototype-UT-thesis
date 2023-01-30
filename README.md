@@ -7,7 +7,8 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 ### WebAR Prototype Demo
 <br />
 
-![WebAR prototype demo](./webar-prototype-demo.gif =300x649)
+![WebAR prototype demo](./webar-prototype-demo.gif)
+
 <br />
 
 ### AR Implementation Framework
@@ -34,7 +35,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 <br />
 <br />
 
-![Image marker](./frontend/assets/targets/acn.png =300x139)
+![Image marker](./frontend/assets/targets/acn.png)
 
 <br />
 
@@ -53,6 +54,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 14. Azure DevOps: store source code in Azure DevOps Repository and execute CI/CD pipeline defined in ```./azure-pipelines.yml``` using Azure DevOps Pipelines service. The build and deployment tasks are executed on Azure's hosted agents. In ```./azure-pipelines.yaml```, SAM CLI commands and others are executed to build and deploy the frontend and backend to AWS. 
 <br />
 <br />
+
 ![WebAR prototype serverless architecture](./prototype-serverless-architecture.jpg)
 <br />
 
