@@ -51,7 +51,7 @@ This repository stores the outputs of Kristen Phan's internship (kristen.phan@ac
 10. Lambda: public facing but accept only CloudFront Distribution endpoint as the origin via HTTPS. Write and read traffic are isolated to allow lambda to scale independently. 
 11. DynamoDB: consists of 2 tables: one to store sensor data, another to store watering records. For the sensor data table, time-to-live is configured to auto expire sensor data more than 30 days old;
 12. IoT: register sensor device and request a device certificate in IoT Core console. Using the device certificate, the microcontroller authenticates and publish sensor data it receives from the sensor to IoT Core every 5 seconds  via MQTTS. IoT Core then writes all sensor data arrived at a specified publish topic to ddb. 
-13. CloudFormation: Use SAM CLI and SAM/ CloudFormation templates to deploy the frontend and backend resources on AWS. SAM/ CloudFormation templates are defined in ```./frontend/samconfig.toml```, ```./frontend/template.yaml```, ```./backend/samconfig.toml```, and ```./frontend/template.yaml```.
+13. CloudFormation: Use SAM CLI and SAM/ CloudFormation templates to deploy the frontend and backend resources on AWS. SAM/ CloudFormation templates are defined in ```./frontend/samconfig.toml```, ```./frontend/template.yaml```, ```./backend/samconfig.toml```, and ```./backend/template.yaml```.
 14. Azure DevOps: store source code in Azure DevOps Repository and execute CI/CD pipeline defined in ```./azure-pipelines.yml``` using Azure DevOps Pipelines service. The build and deployment tasks are executed on Azure's hosted agents. In ```./azure-pipelines.yaml```, SAM CLI commands and others are executed to build and deploy the frontend and backend to AWS. 
 <br />
 <br />
